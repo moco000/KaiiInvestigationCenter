@@ -612,16 +612,24 @@ const gameState = {
     if (startBtn) startBtn.classList.add("hidden");
     if (kaijiDot) kaijiDot.classList.add("hidden");
   
+    // デバッグ表示用
+    console.log("[geo] initMapScreen start");
+  
     // 位置情報取得 → 成功なら現在地、失敗ならフォールバック座標
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
+          console.log("[geo] success:", pos.coords);
           const lat = pos.coords.latitude;
           const lng = pos.coords.longitude;
+          if (status) {
+            status.textContent = "現在地の取得に成功しました。";
+          }
           runMapScenario([lat, lng]);
         },
         (err) => {
-          console.warn("位置情報取得失敗:", err);
+          console.warn("[geo] error:", err);
+  
           if (status) {
             if (err.code === 1) {
               status.textContent =
@@ -634,16 +642,21 @@ const gameState = {
                 "位置情報取得がタイムアウトしました。テスト用座標でスキャンします。";
             } else {
               status.textContent =
-                "位置情報取得時にエラーが発生しました。テスト用座標でスキャンします。";
+                "位置情報取得時に不明なエラーが発生しました。テスト用座標でスキャンします。";
             }
           }
-          // 渋谷駅付近を仮の現在地に
+  
+          // フォールバック（渋谷駅付近）
           runMapScenario([35.6595, 139.7005]);
         },
-        { enableHighAccuracy: true, timeout: 5000 }
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,   // タイムアウトを少し長めに
+          maximumAge: 0,    // キャッシュ位置を使わない
+        }
       );
     } else {
-      console.warn("このブラウザは geolocation に対応していません。");
+      console.warn("[geo] geolocation not supported");
       if (status) {
         status.textContent =
           "この端末では位置情報が使用できません。テスト用座標でスキャンします。";
@@ -651,6 +664,7 @@ const gameState = {
       runMapScenario([35.6595, 139.7005]);
     }
   }
+  
   
   // 位置情報が決まったあとに実際のマップ＆シナリオをセットする処理
   function runMapScenario(playerLatLng) {
