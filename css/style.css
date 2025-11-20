@@ -119,9 +119,9 @@
   .radar {
     position: relative;
   
-    /* 少し小さめにして全体が見えやすく */
-    width: 60%;
-    max-width: 300px;
+    /* ★ サークルを少し小さくして切れにくくする */
+    width: 55%;
+    max-width: 260px;
   
     aspect-ratio: 1 / 1;
     border-radius: 50%;
@@ -654,7 +654,7 @@
   }
   
   /* ===============================
-     レスポンシブ微調整（16:9内での調整）
+     レスポンシブ微調整
      =============================== */
   
   /* スマホ用マップ＆特定ウィンドウ補正 */
@@ -675,9 +675,10 @@
       margin: 0;
     }
   
+    /* ★ スマホ縦ではサークルをさらに小さくして見切れ防止 */
     .radar {
-      width: 72%;
-      max-width: 260px;
+      width: 60%;
+      max-width: 220px;
     }
   
     .screen-inner {
@@ -690,6 +691,30 @@
     #confirm-identity {
       font-size: 14px;
       padding: 10px 0;
+    }
+  
+    /* ★ 調査メニューを「ほぼ全画面＋読みやすい文字」に */
+    .menu-window {
+      width: 94%;
+      max-height: 92%;
+      padding: 10px;
+      border-radius: 14px;
+    }
+  
+    .menu-window h2 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+  
+    .tab-btn {
+      font-size: 12px;
+      padding: 6px 4px;
+    }
+  
+    .menu-content {
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 6px 0;
     }
   }
   
