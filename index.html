@@ -1,143 +1,162 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8" />
-    <title>怪異調査センター - プロトタイプ</title>
+  <meta charset="UTF-8" />
+  <title>怪異調査センター - プロトタイプ</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 
-    <!-- Leaflet (実マップ描画用) -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Leaflet (実マップ描画用) -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
 </head>
-
 <body>
-    <!-- 16:9 固定ゲームキャンバス -->
-    <div class="game-wrapper">
+  <!-- 16:9 固定ゲームキャンバス -->
+  <div class="game-wrapper">
 
-        <!-- 黒フェードアウト -->
-        <div id="overlay-black" class="overlay-black hidden"></div>
+    <!-- 黒フェードアウト -->
+    <div id="overlay-black" class="overlay-black hidden"></div>
 
-        <!-- 特定成功エフェクト -->
-        <div id="identify-overlay" class="identify-overlay hidden">
-            <div class="identify-text">特定</div>
+    <!-- 特定成功エフェクト -->
+    <div id="identify-overlay" class="identify-overlay hidden">
+      <div class="identify-text">特定</div>
+    </div>
+
+    <!-- 特定失敗エフェクト -->
+    <div id="identify-fail-overlay" class="identify-fail-overlay hidden">
+      <div class="identify-fail-text">特定失敗</div>
+    </div>
+
+    <!-- ▼ 1. マップ画面（レーダー＋実マップ円） -->
+    <section id="screen-map" class="screen">
+      <div class="map-header">
+        <h1>怪異調査センター</h1>
+        <p id="map-status">周辺の怪異反応をスキャン中...</p>
+      </div>
+
+      <div id="map" class="map-container">
+        <!-- 丸いレーダーコンテナ -->
+        <div id="radar" class="radar">
+          <!-- 実マップ（Leaflet）がこの中に描画される -->
+          <div id="real-map" class="real-map-layer"></div>
+
+          <!-- スキャンスイープ -->
+          <div class="radar-sweep"></div>
+
+          <!-- 自分（中心） -->
+          <div class="radar-center-dot"></div>
+
+          <!-- 怪異の反応 -->
+          <div id="radar-kaiji" class="radar-dot radar-dot-kaiji hidden"></div>
         </div>
+      </div>
 
-        <!-- 特定失敗エフェクト -->
-        <div id="identify-fail-overlay" class="identify-fail-overlay hidden">
-            <div class="identify-fail-text">特定失敗</div>
+      <button id="start-investigation" class="main-btn hidden">
+        調査を開始する
+      </button>
+    </section>
+
+    <!-- ▼ 2. 会話パート画面（左右立ち絵＋テキスト） -->
+    <section id="screen-dialog" class="screen hidden">
+      <div class="bg-layer">
+        <img
+          id="bg-image"
+          class="bg-image"
+          src="assets/bg/bg_station_night.jpg"
+          alt=""
+        />
+      </div>
+
+      <div class="char-layer">
+        <!-- 左：プレイヤー -->
+        <img
+          id="char-left"
+          class="char-image char-left"
+          src="assets/char/player_neutral.png"
+          alt="調査員"
+        />
+        <!-- 右：助手 -->
+        <img
+          id="char-right"
+          class="char-image char-right"
+          src="assets/char/partner_neutral.png"
+          alt="助手"
+        />
+      </div>
+
+      <div id="textbox" class="textbox">
+        <div class="name-box" id="speaker-name"></div>
+        <div class="text-box" id="dialog-text"></div>
+        <div class="textbox-hint">（クリック / タップで進む）</div>
+      </div>
+      <button id="menu-btn" class="menu-btn">調査メニュー</button>
+    </section>
+
+    <!-- ▼ 3. 調査メニュー（オーバーレイ） -->
+    <div id="menu-overlay" class="menu-overlay hidden">
+      <div class="menu-window">
+        <h2>調査メニュー</h2>
+        <div class="menu-tabs">
+          <button class="tab-btn active" data-tab="howto">調査の進め方</button>
+          <button class="tab-btn" data-tab="evidence">証拠品</button>
+          <button class="tab-btn" data-tab="memo">怪異の特徴メモ</button>
         </div>
-
-        <!-- ▼ 1. マップ画面（レーダー＋実マップ円） -->
-        <section id="screen-map" class="screen">
-            <div class="map-header">
-                <h1>怪異調査センター</h1>
-                <p id="map-status">周辺の怪異反応をスキャン中...</p>
-            </div>
-
-            <div id="map" class="map-container">
-                <!-- 丸いレーダーコンテナ -->
-                <div id="radar" class="radar">
-                    <!-- 実マップ（Leaflet）がこの中に描画される -->
-                    <div id="real-map" class="real-map-layer"></div>
-
-                    <!-- スキャンスイープ -->
-                    <div class="radar-sweep"></div>
-
-                    <!-- 自分（中心） -->
-                    <div class="radar-center-dot"></div>
-
-                    <!-- 怪異の反応 -->
-                    <div id="radar-kaiji" class="radar-dot radar-dot-kaiji hidden"></div>
-                </div>
-            </div>
-
-            <button id="start-investigation" class="main-btn hidden">
-                調査を開始する
-            </button>
-        </section>
-
-        <!-- ▼ 2. 会話パート画面（左右立ち絵＋テキスト） -->
-        <section id="screen-dialog" class="screen hidden">
-            <div class="bg-layer">
-                <img id="bg-image" class="bg-image" src="assets/bg/bg_station_night.jpg" alt="" />
-            </div>
-
-            <div class="char-layer">
-                <!-- 左：プレイヤー -->
-                <img id="char-left" class="char-image char-left" src="assets/char/player_neutral.png" alt="調査員" />
-                <!-- 右：助手 -->
-                <img id="char-right" class="char-image char-right" src="assets/char/partner_neutral.png" alt="助手" />
-            </div>
-
-            <div id="textbox" class="textbox">
-                <div class="name-box" id="speaker-name"></div>
-                <div class="text-box" id="dialog-text"></div>
-                <div class="textbox-hint">（クリック / タップで進む）</div>
-            </div>
-            <button id="menu-btn" class="menu-btn">調査メニュー</button>
-        </section>
-
-        <!-- ▼ 3. 調査メニュー（オーバーレイ） -->
-        <div id="menu-overlay" class="menu-overlay hidden">
-            <div class="menu-window">
-                <h2>調査メニュー</h2>
-                <div class="menu-tabs">
-                    <button class="tab-btn active" data-tab="howto">調査の進め方</button>
-                    <button class="tab-btn" data-tab="evidence">証拠品</button>
-                    <button class="tab-btn" data-tab="memo">怪異の特徴メモ</button>
-                </div>
-                <div id="menu-content" class="menu-content"></div>
-                <div class="menu-footer">
-                    <button id="menu-close" class="sub-btn">閉じる</button>
-                </div>
-            </div>
+        <div id="menu-content" class="menu-content"></div>
+        <div class="menu-footer">
+          <button id="menu-close" class="sub-btn">閉じる</button>
         </div>
+      </div>
+    </div>
 
-        <!-- ▼ 4. 怪異特定画面 -->
-        <section id="screen-identify" class="screen hidden">
-            <div class="screen-inner">
-                <h2>怪異特定</h2>
-                <p class="identify-desc">
-                    手に入れた情報をもとに、怪異の正体を穴埋めで特定してください。
-                </p>
+    <!-- ▼ 4. 怪異特定画面 -->
+    <section id="screen-identify" class="screen hidden">
+      <div class="screen-inner">
+        <h2>怪異特定</h2>
+        <p class="identify-desc">
+          手に入れた情報をもとに、怪異の正体を穴埋めで特定してください。
+        </p>
 
-                <!-- 特定画面からも調査メニューを開ける -->
-                <button id="menu-btn-identify" class="menu-btn menu-btn-identify">
-                    調査メニュー
-                </button>
+        <!-- 特定画面からも調査メニューを開ける -->
+        <button id="menu-btn-identify" class="menu-btn menu-btn-identify">
+          調査メニュー
+        </button>
 
-                <div id="fill-blanks" class="fill-blanks"></div>
-                <button id="confirm-identity" class="main-btn">怪異を特定する</button>
-            </div>
-        </section>
+        <div id="fill-blanks" class="fill-blanks"></div>
+        <button id="confirm-identity" class="main-btn">怪異を特定する</button>
+      </div>
+    </section>
 
-        <!-- ▼ 5. 封印画面 -->
-        <section id="screen-seal" class="screen hidden">
-            <div class="screen-inner">
-                <h2>封印儀式</h2>
-                <p class="seal-desc">
-                    「封印」ボタンを長押しし、怪異を拘束してください。
-                </p>
-                <div class="seal-area">
-                    <button id="seal-btn" class="seal-btn">長押しで封印</button>
-                    <div class="seal-gauge-wrapper">
-                        <div id="seal-gauge" class="seal-gauge"></div>
-                    </div>
-                </div>
-                <!-- 封印完了エリア：ここに赤い演出＋「封印完了」テキストが出る -->
-                <div id="seal-effect" class="seal-effect"></div>
-            </div>
-        </section>
+    <!-- ▼ 5. 封印画面 -->
+    <section id="screen-seal" class="screen hidden">
+      <div class="screen-inner">
+        <h2>封印儀式</h2>
+        <p class="seal-desc">
+          「封印」ボタンを長押しし、怪異を拘束してください。
+        </p>
+        <div class="seal-area">
+          <button id="seal-btn" class="seal-btn">長押しで封印</button>
+          <div class="seal-gauge-wrapper">
+            <div id="seal-gauge" class="seal-gauge"></div>
+          </div>
+        </div>
+        <!-- 封印完了エリア：ここに赤い演出＋「封印完了」テキストが出る -->
+        <div id="seal-effect" class="seal-effect"></div>
+      </div>
+    </section>
 
-    </div><!-- /game-wrapper -->
+  </div><!-- /game-wrapper -->
 
-    <script src="js/game.js" defer></script>
+  <script src="js/game.js" defer></script>
 </body>
-
 </html>

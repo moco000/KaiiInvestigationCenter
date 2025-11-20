@@ -2,70 +2,67 @@
    16:9 固定キャンバス & ベース
    =============================== */
 
-* {
+   * {
     box-sizing: border-box;
-}
-
-html,
-body {
+  }
+  
+  html,
+  body {
     margin: 0;
     padding: 0;
     background: #000;
     height: 100%;
     overflow: hidden;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      sans-serif;
     color: #fff;
-
-    /* ★ ゲーム画面を画面中央に配置する */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* ■ ゲーム画面自体（16:9固定） */
-.game-wrapper {
-    position: relative;
-
+  }
+  
+  /* ■ ゲーム画面自体（16:9固定・画面中央） */
+  .game-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  
     /* 画面の短辺に合わせて 16:9 を維持 */
     width: 100vw;
     height: calc(100vw * 9 / 16);
     max-height: 100vh;
     max-width: calc(100vh * 16 / 9);
-
-    margin: 0 auto;
+  
     background: #000;
     overflow: hidden;
-}
-
-/* ■ 全ての画面は game-wrapper 内でフルサイズ */
-.screen {
+  }
+  
+  /* ■ 全ての画面は game-wrapper 内でフルサイズ */
+  .screen {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
     background: #000;
-}
-
-.hidden {
+  }
+  
+  .hidden {
     display: none !important;
-}
-
-.main-btn,
-.sub-btn,
-.menu-btn,
-.seal-btn,
-.tab-btn {
+  }
+  
+  .main-btn,
+  .sub-btn,
+  .menu-btn,
+  .seal-btn,
+  .tab-btn {
     border: none;
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 999px;
     font-size: 16px;
-}
-
-/* 黒フェードアウト（ゲーム画面内） */
-
-.overlay-black {
+  }
+  
+  /* 黒フェードアウト（ゲーム画面内） */
+  
+  .overlay-black {
     position: absolute;
     inset: 0;
     background: #000;
@@ -73,36 +70,36 @@ body {
     pointer-events: none;
     transition: opacity 1.2s ease;
     z-index: 999;
-}
-
-.overlay-black.show {
+  }
+  
+  .overlay-black.show {
     opacity: 1;
-}
-
-/* ===============================
-   マップ画面
-   =============================== */
-
-.map-header {
+  }
+  
+  /* ===============================
+     マップ画面
+     =============================== */
+  
+  .map-header {
     padding: 8px 10px;
     border-bottom: 1px solid #333;
     background: #05070a;
     flex: 0 0 auto;
-}
-
-.map-header h1 {
+  }
+  
+  .map-header h1 {
     margin: 0;
     font-size: 18px;
-}
-
-#map-status {
+  }
+  
+  #map-status {
     margin: 3px 0 0;
     font-size: 12px;
     color: #aaa;
-}
-
-.map-container,
-#map {
+  }
+  
+  .map-container,
+  #map {
     flex: 1 1 auto;
     margin: 6px 10px 4px;
     border-radius: 12px;
@@ -111,92 +108,97 @@ body {
     align-items: center;
     justify-content: center;
     background: #05070a;
-}
-
-#map {
+  }
+  
+  #map {
     min-height: 0;
-}
-
-/* レーダー円（中にマップを表示） */
-
-.radar {
+  }
+  
+  /* レーダー円（中にマップを表示） */
+  
+  .radar {
     position: relative;
-
-    /* ★ 少し小さめにして全体が見えやすく */
+  
+    /* 少し小さめにして全体が見えやすく */
     width: 60%;
     max-width: 300px;
-
+  
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 255, 120, 0.4);
     background: #000;
-}
-
-/* Leaflet マップレイヤーを円の中に全面配置 */
-.real-map-layer,
-#real-map {
+  }
+  
+  /* Leaflet マップレイヤーを円の中に全面配置 */
+  .real-map-layer,
+  #real-map {
     position: absolute;
     inset: 0;
     filter: brightness(0.45) contrast(0.9);
-}
-
-/* 同心円グリッド */
-.radar::before {
+  }
+  
+  /* 同心円グリッド */
+  .radar::before {
     content: "";
     position: absolute;
     inset: 10%;
     border-radius: 50%;
     border: 1px solid rgba(0, 255, 120, 0.35);
     box-shadow: 0 0 0 1px rgba(0, 255, 120, 0.25),
-        0 0 0 20% rgba(0, 255, 120, 0.2);
+      0 0 0 20% rgba(0, 255, 120, 0.2);
     pointer-events: none;
-}
-
-/* 十字線 */
-.radar::after {
+  }
+  
+  /* 十字線 */
+  .radar::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right,
-            transparent 49.5%,
-            rgba(0, 255, 120, 0.3) 50%,
-            transparent 50.5%),
-        linear-gradient(to bottom,
-            transparent 49.5%,
-            rgba(0, 255, 120, 0.3) 50%,
-            transparent 50.5%);
+    background: linear-gradient(
+        to right,
+        transparent 49.5%,
+        rgba(0, 255, 120, 0.3) 50%,
+        transparent 50.5%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 49.5%,
+        rgba(0, 255, 120, 0.3) 50%,
+        transparent 50.5%
+      );
     opacity: 0.6;
     pointer-events: none;
-}
-
-/* スキャンのスイープ線 */
-
-.radar-sweep {
+  }
+  
+  /* スキャンのスイープ線 */
+  
+  .radar-sweep {
     position: absolute;
     inset: 0;
-    background-image: conic-gradient(from 0deg,
-            rgba(0, 255, 120, 0) 0deg,
-            rgba(0, 255, 120, 0.3) 20deg,
-            rgba(0, 255, 120, 0) 80deg);
+    background-image: conic-gradient(
+      from 0deg,
+      rgba(0, 255, 120, 0) 0deg,
+      rgba(0, 255, 120, 0.3) 20deg,
+      rgba(0, 255, 120, 0) 80deg
+    );
     transform-origin: 50% 50%;
     animation: radar-rotate 3s linear infinite;
     pointer-events: none;
-}
-
-@keyframes radar-rotate {
+  }
+  
+  @keyframes radar-rotate {
     from {
-        transform: rotate(0deg);
+      transform: rotate(0deg);
     }
-
     to {
-        transform: rotate(360deg);
+      transform: rotate(360deg);
     }
-}
-
-/* 中央の自分 */
-
-.radar-center-dot {
+  }
+  
+  /* 中央の自分 */
+  
+  .radar-center-dot {
     position: absolute;
     width: 10px;
     height: 10px;
@@ -207,11 +209,11 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
-}
-
-/* 怪異の反応 */
-
-.radar-dot {
+  }
+  
+  /* 怪異の反応 */
+  
+  .radar-dot {
     position: absolute;
     width: 12px;
     height: 12px;
@@ -220,27 +222,26 @@ body {
     box-shadow: 0 0 16px rgba(255, 23, 68, 0.9);
     animation: radar-dot-pulse 1.2s ease-in-out infinite alternate;
     pointer-events: none;
-}
-
-@keyframes radar-dot-pulse {
+  }
+  
+  @keyframes radar-dot-pulse {
     from {
-        transform: scale(0.9);
-        opacity: 0.7;
+      transform: scale(0.9);
+      opacity: 0.7;
     }
-
     to {
-        transform: scale(1.2);
-        opacity: 1;
+      transform: scale(1.2);
+      opacity: 1;
     }
-}
-
-/* 怪異点の標準位置（シナリオで上書きされる） */
-.radar-dot-kaiji {
+  }
+  
+  /* 怪異点の標準位置（シナリオで上書きされる） */
+  .radar-dot-kaiji {
     top: 20%;
     left: 72%;
-}
-
-#start-investigation {
+  }
+  
+  #start-investigation {
     margin: 0 auto 8px;
     background: #e53935;
     color: #fff;
@@ -248,86 +249,86 @@ body {
     min-width: 200px;
     box-shadow: 0 4px 16px rgba(229, 57, 53, 0.4);
     font-size: 15px;
-}
-
-/* ===============================
-   会話パート
-   =============================== */
-
-.bg-layer,
-.char-layer {
+  }
+  
+  /* ===============================
+     会話パート
+     =============================== */
+  
+  .bg-layer,
+  .char-layer {
     position: absolute;
     inset: 0;
     overflow: hidden;
-}
-
-.bg-image {
+  }
+  
+  .bg-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     filter: brightness(0.7);
-}
-
-/* 立ち絵：左右固定配置 */
-
-.char-image {
+  }
+  
+  /* 立ち絵：左右固定配置（高さ揃え） */
+  
+  .char-image {
     position: absolute;
     bottom: 0;
     height: 80%;
     width: auto;
     object-fit: contain;
     transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
-}
-
-.char-left {
+  }
+  
+  .char-left {
     left: 4%;
-}
-
-.char-right {
+  }
+  
+  .char-right {
     right: 4%;
-}
-
-/* 話してない側を暗くする */
-.char-image.inactive {
+  }
+  
+  /* 話してない側を暗くする */
+  .char-image.inactive {
     opacity: 0.25;
     filter: grayscale(40%);
     transform: scale(0.95);
-}
-
-/* テキストボックス */
-
-.textbox {
+  }
+  
+  /* テキストボックス */
+  
+  .textbox {
     margin-top: auto;
     background: rgba(0, 0, 0, 0.78);
     padding: 6px 8px 8px;
     border-top: 1px solid #333;
     position: relative;
     z-index: 3;
-}
-
-.name-box {
+  }
+  
+  .name-box {
     font-size: 13px;
     font-weight: bold;
     color: #ffeb3b;
     margin-bottom: 3px;
-}
-
-.text-box {
+  }
+  
+  .text-box {
     min-height: 40px;
     font-size: 14px;
     line-height: 1.5;
-}
-
-.textbox-hint {
+  }
+  
+  .textbox-hint {
     font-size: 10px;
     color: #aaa;
     text-align: right;
     margin-top: 2px;
-}
-
-/* 調査メニューボタン */
-
-.menu-btn {
+  }
+  
+  /* 調査メニューボタン */
+  
+  .menu-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -338,20 +339,20 @@ body {
     border-radius: 999px;
     border: 1px solid #555;
     z-index: 5;
-}
-
-.menu-btn-identify {
+  }
+  
+  .menu-btn-identify {
     position: relative;
     top: 0;
     right: 0;
     margin-bottom: 10px;
-}
-
-/* ===============================
-   調査メニュー（オーバーレイ）
-   =============================== */
-
-.menu-overlay {
+  }
+  
+  /* ===============================
+     調査メニュー（オーバーレイ）
+     =============================== */
+  
+  .menu-overlay {
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
@@ -359,9 +360,9 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 10;
-}
-
-.menu-window {
+  }
+  
+  .menu-window {
     width: min(420px, 92%);
     max-height: 80%;
     background: #111;
@@ -370,107 +371,105 @@ body {
     padding: 12px;
     display: flex;
     flex-direction: column;
-}
-
-.menu-window h2 {
+  }
+  
+  .menu-window h2 {
     margin: 0 0 8px;
     font-size: 17px;
-}
-
-.menu-tabs {
+  }
+  
+  .menu-tabs {
     display: flex;
     gap: 6px;
     margin-bottom: 8px;
-}
-
-.tab-btn {
+  }
+  
+  .tab-btn {
     flex: 1;
     background: #222;
     color: #ccc;
     font-size: 12px;
-}
-
-.tab-btn.active {
+  }
+  
+  .tab-btn.active {
     background: #673ab7;
     color: #fff;
-}
-
-.menu-content {
+  }
+  
+  .menu-content {
     flex: 1;
     overflow-y: auto;
     font-size: 13px;
     line-height: 1.5;
     padding: 6px 2px;
-}
-
-.menu-content ul {
+  }
+  
+  .menu-content ul {
     padding-left: 1.2em;
-}
-
-.menu-footer {
+  }
+  
+  .menu-footer {
     margin-top: 8px;
     text-align: right;
-}
-
-.sub-btn {
+  }
+  
+  .sub-btn {
     background: #333;
     color: #fff;
-}
-
-/* ===============================
-   特定・封印画面 共通
-   =============================== */
-
-/* 特定・封印などの中央ウィンドウ */
-.screen-inner {
-    /* 画面中央寄せはしつつも、上下に少しマージンを取る */
-    margin: 8px auto;
+  }
   
+  /* ===============================
+     特定・封印画面 共通
+     =============================== */
+  
+  /* 特定・封印などの中央ウィンドウ */
+  .screen-inner {
+    margin: 8px auto;
     width: min(480px, 90%);
-    max-height: calc(100% - 16px);  /* ★ 画面内に収まる最大高さ */
-    overflow-y: auto;               /* ★ 中身が多いときは中でスクロール */
+    max-height: calc(100% - 16px);
+    overflow-y: auto;
   
     background: #101018;
     border-radius: 16px;
     padding: 12px;
     border: 1px solid #333;
-  }  
-
-.screen-inner h2 {
+  }
+  
+  .screen-inner h2 {
     margin-top: 0;
     margin-bottom: 6px;
     font-size: 18px;
-}
-
-.identify-desc,
-.seal-desc {
+  }
+  
+  .identify-desc,
+  .seal-desc {
     font-size: 12px;
     color: #ccc;
     margin-top: 0;
     margin-bottom: 10px;
-}
-
-/* 怪異特定 */
-
-.fill-blanks {
+  }
+  
+  /* 怪異特定 */
+  
+  .fill-blanks {
     border-radius: 8px;
     padding: 8px;
     background: #181828;
     margin-bottom: 14px;
     font-size: 13px;
-}
-
-.fill-row {
+  }
+  
+  .fill-row {
     margin-bottom: 8px;
-}
-
-.fill-row label {
+  }
+  
+  .fill-row label {
     display: inline-block;
     min-width: 80px;
     font-size: 13px;
-}
-
-.fill-row select {
+  }
+  
+  .fill-row select {
     min-width: 140px;
     padding: 4px;
     border-radius: 6px;
@@ -478,45 +477,55 @@ body {
     background: #111;
     color: #fff;
     font-size: 13px;
-}
-
-/* 封印 */
-
-.seal-area {
+  }
+  
+  /* 特定ボタンをウィンドウ幅に合わせる */
+  
+  #confirm-identity {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 12px 0;
+  }
+  
+  /* 封印 */
+  
+  .seal-area {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     margin-top: 8px;
-}
-
-.seal-btn {
+  }
+  
+  .seal-btn {
     background: #e53935;
     color: #fff;
     font-weight: bold;
     min-width: 200px;
     box-shadow: 0 4px 16px rgba(229, 57, 53, 0.5);
     font-size: 15px;
-}
-
-.seal-gauge-wrapper {
+  }
+  
+  .seal-gauge-wrapper {
     width: 100%;
     height: 10px;
     border-radius: 999px;
     background: #222;
     overflow: hidden;
-}
-
-.seal-gauge {
+  }
+  
+  .seal-gauge {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, #ffeb3b, #ff9800, #f44336);
     transition: width 0.05s linear;
-}
-
-/* ★ 封印完了エリア：赤い矩形＋テキストオーバーレイ */
-
-.seal-effect {
+  }
+  
+  /* 封印完了エリア：赤い矩形＋テキストオーバーレイ */
+  
+  .seal-effect {
     margin-top: 16px;
     height: 100px;
     border-radius: 12px;
@@ -525,10 +534,10 @@ body {
     transform: scale(0.8);
     transition: opacity 0.4s ease, transform 0.4s ease;
     position: relative;
-}
-
-/* 封印完了テキスト（active時だけ表示） */
-.seal-effect::after {
+  }
+  
+  /* 封印完了テキスト（active時だけ表示） */
+  .seal-effect::after {
     content: "封印完了";
     position: absolute;
     inset: 0;
@@ -543,24 +552,24 @@ body {
     opacity: 0;
     transform: translateY(8px);
     transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.seal-effect.active {
+  }
+  
+  .seal-effect.active {
     opacity: 1;
     transform: scale(1);
-}
-
-.seal-effect.active::after {
+  }
+  
+  .seal-effect.active::after {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* ===============================
-   特定成功・失敗オーバーレイ
-   =============================== */
-
-.identify-overlay,
-.identify-fail-overlay {
+  }
+  
+  /* ===============================
+     特定成功・失敗オーバーレイ
+     =============================== */
+  
+  .identify-overlay,
+  .identify-fail-overlay {
     position: absolute;
     inset: 0;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
@@ -572,143 +581,187 @@ body {
     transform: scale(1.1);
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 900;
-}
-
-.identify-fail-overlay {
+  }
+  
+  .identify-fail-overlay {
     background: radial-gradient(circle, rgba(255, 0, 0, 0.12), transparent 70%);
-}
-
-.identify-overlay.show,
-.identify-fail-overlay.show {
+  }
+  
+  .identify-overlay.show,
+  .identify-fail-overlay.show {
     opacity: 1;
     transform: scale(1);
-}
-
-.identify-text,
-.identify-fail-text {
+  }
+  
+  .identify-text,
+  .identify-fail-text {
     letter-spacing: 0.25em;
     padding: 14px 28px;
     border-radius: 12px;
     border: 2px solid rgba(255, 255, 255, 0.8);
     text-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
     animation: identify-flash 0.8s ease-out forwards;
-}
-
-.identify-text {
+  }
+  
+  .identify-text {
     font-size: 44px;
-}
-
-.identify-fail-text {
+  }
+  
+  .identify-fail-text {
     font-size: 38px;
     color: #ff5252;
     border-color: rgba(255, 80, 80, 0.8);
     text-shadow: 0 0 12px rgba(255, 50, 50, 0.9);
     animation-name: identify-fail-flash;
-}
-
-@keyframes identify-flash {
+  }
+  
+  @keyframes identify-flash {
     0% {
-        opacity: 0;
-        transform: scale(0.7);
-        filter: blur(4px);
+      opacity: 0;
+      transform: scale(0.7);
+      filter: blur(4px);
     }
-
+  
     30% {
-        opacity: 1;
-        transform: scale(1.05);
-        filter: blur(0);
+      opacity: 1;
+      transform: scale(1.05);
+      filter: blur(0);
     }
-
+  
     100% {
-        opacity: 0.9;
-        transform: scale(1);
+      opacity: 0.9;
+      transform: scale(1);
     }
-}
-
-@keyframes identify-fail-flash {
+  }
+  
+  @keyframes identify-fail-flash {
     0% {
-        opacity: 0;
-        transform: scale(0.7);
-        filter: blur(3px);
+      opacity: 0;
+      transform: scale(0.7);
+      filter: blur(3px);
     }
-
+  
     30% {
-        opacity: 1;
-        transform: scale(1.05);
-        filter: blur(0);
+      opacity: 1;
+      transform: scale(1.05);
+      filter: blur(0);
     }
-
+  
     100% {
-        opacity: 0.9;
-        transform: scale(1);
+      opacity: 0.9;
+      transform: scale(1);
     }
-}
-
-/* ===============================
-   レスポンシブ微調整（16:9内での調整）
-   =============================== */
-
-@media (min-width: 600px) {
+  }
+  
+  /* ===============================
+     レスポンシブ微調整（16:9内での調整）
+     =============================== */
+  
+  /* スマホ用マップ＆特定ウィンドウ補正 */
+  @media (max-width: 480px) {
+    #screen-map {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+  
+    .map-container {
+      margin: 4px;
+      flex: 1;
+      min-height: 0;
+    }
+  
+    #map {
+      margin: 0;
+    }
+  
+    .radar {
+      width: 72%;
+      max-width: 260px;
+    }
+  
+    .screen-inner {
+      max-height: calc(100% - 8px);
+      padding: 10px;
+      margin: 4px auto;
+      overflow-y: auto;
+    }
+  
+    #confirm-identity {
+      font-size: 14px;
+      padding: 10px 0;
+    }
+  }
+  
+  /* 画面が極端に低い場合は全体を少し縮小 */
+  @media (max-height: 600px) {
+    .game-wrapper {
+      transform: translate(-50%, -50%) scale(0.92);
+    }
+  }
+  
+  @media (min-width: 600px) {
     .map-header h1 {
-        font-size: 20px;
+      font-size: 20px;
     }
-
+  
     #map-status {
-        font-size: 13px;
+      font-size: 13px;
     }
-
+  
     .textbox {
-        padding: 8px 12px 10px;
+      padding: 8px 12px 10px;
     }
-
+  
     .name-box {
-        font-size: 14px;
+      font-size: 14px;
     }
-
+  
     .text-box {
-        font-size: 15px;
+      font-size: 15px;
     }
-
+  
     .screen-inner {
-        width: min(520px, 80%);
+      width: min(520px, 80%);
     }
-
+  
     .fill-row label {
-        min-width: 110px;
+      min-width: 110px;
     }
-
+  
     .fill-row select {
-        min-width: 190px;
+      min-width: 190px;
     }
-
+  
     .identify-text {
-        font-size: 52px;
+      font-size: 52px;
     }
-
+  
     .identify-fail-text {
-        font-size: 44px;
+      font-size: 44px;
     }
-}
-
-@media (min-width: 900px) {
+  }
+  
+  @media (min-width: 900px) {
     .char-left {
-        left: 6%;
+      left: 6%;
     }
-
+  
     .char-right {
-        right: 6%;
+      right: 6%;
     }
-
+  
     .textbox {
-        max-width: 80%;
-        margin: 0 auto;
+      max-width: 80%;
+      margin: 0 auto;
     }
-
+  
     .menu-window {
-        width: 420px;
+      width: 420px;
     }
-
+  
     .screen-inner {
-        width: 560px;
+      width: 560px;
     }
-}
+  }
+  

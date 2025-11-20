@@ -612,7 +612,6 @@ const gameState = {
     if (startBtn) startBtn.classList.add("hidden");
     if (kaijiDot) kaijiDot.classList.add("hidden");
   
-    // デバッグ表示用
     console.log("[geo] initMapScreen start");
   
     // 位置情報取得 → 成功なら現在地、失敗ならフォールバック座標
@@ -651,8 +650,8 @@ const gameState = {
         },
         {
           enableHighAccuracy: true,
-          timeout: 10000,   // タイムアウトを少し長めに
-          maximumAge: 0,    // キャッシュ位置を使わない
+          timeout: 10000,
+          maximumAge: 0,
         }
       );
     } else {
@@ -664,7 +663,6 @@ const gameState = {
       runMapScenario([35.6595, 139.7005]);
     }
   }
-  
   
   // 位置情報が決まったあとに実際のマップ＆シナリオをセットする処理
   function runMapScenario(playerLatLng) {
@@ -700,7 +698,7 @@ const gameState = {
         maxZoom: 19,
       }).addTo(map);
   
-      // ★ 現在地だけピンを立てる（青いピンが2つ出ないように怪異ピンは出さない）
+      // 現在地だけピンを立てる（怪異ピンは出さない）
       L.marker(center, { title: "現在地" }).addTo(map);
   
       setTimeout(() => {
