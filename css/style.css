@@ -530,44 +530,82 @@ body {
 }
 
 /* ★ 封印完了エリア：赤い矩形＋テキストオーバーレイ */
-
+/* 封印エフェクト本体 */
 .seal-effect {
+    position: relative;
     margin-top: 16px;
     height: 100px;
+    width: 100%;
+    max-width: 320px;
     border-radius: 12px;
     background: radial-gradient(circle, rgba(255, 0, 0, 0.6), transparent);
     opacity: 0;
     transform: scale(0.8);
     transition: opacity 0.4s ease, transform 0.4s ease;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 封印成功時だけ光る */
+/* 封印エフェクト本体 */
+.seal-effect {
     position: relative;
-}
-
-/* 封印完了テキスト（active時だけ表示） */
-.seal-effect::after {
-    content: "封印完了";
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: bold;
-    letter-spacing: 0.2em;
-    color: #fff;
-    text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+    margin-top: 16px;
+    height: 100px;
+    width: 100%;
+    max-width: 320px;
+    border-radius: 12px;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.6), transparent);
     opacity: 0;
-    transform: translateY(8px);
+    transform: scale(0.8);
     transition: opacity 0.4s ease, transform 0.4s ease;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* ★ 文字を中央に置くため flex-center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* 光るとき */
 .seal-effect.active {
     opacity: 1;
     transform: scale(1);
 }
 
-.seal-effect.active::after {
-    opacity: 1;
-    transform: translateY(0);
+/* 封印完了テキスト（完全中央配置） */
+.seal-effect::after {
+    content: "封印完了";
+    position: absolute;
+
+    /* 中央配置 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff4f4;
+    letter-spacing: 0.25em;
+    white-space: nowrap;
+}
+
+/* スマホ調整 */
+@media (max-width: 600px) {
+    .seal-effect {
+        height: 80px;
+        transform: scale(0.9);
+    }
+
+    .seal-effect.active {
+        transform: scale(1);
+    }
+
+    .seal-effect::after {
+        font-size: 18px;
+        letter-spacing: 0.18em;
+    }
 }
 
 /* ===============================
@@ -780,4 +818,143 @@ body {
     margin-bottom: 8px;
     font-size: 12px;
     color: #ccc;
+}
+
+/* ▼ 怪異特定画面：スマホで下が切れないようにスクロール可能にする */
+#screen-identify .screen-inner {
+    /* ゲーム画面(16:9)の高さにフィットさせて、中だけスクロール */
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+/* スマホ用に少し詰める */
+@media (max-width: 600px) {
+    #screen-identify .screen-inner {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .identify-desc {
+        margin-bottom: 6px;
+        font-size: 12px;
+    }
+
+    .fill-blanks {
+        margin-bottom: 8px;
+    }
+
+    #confirm-identity {
+        margin-top: 4px;
+    }
+}
+
+/* ▼ 封印画面：下が切れないように、中身だけスクロール可能にする */
+#screen-seal .screen-inner {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* スマホ向けの余白・サイズ調整 */
+@media (max-width: 600px) {
+    #screen-seal .screen-inner {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .seal-desc {
+        margin-bottom: 6px;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .seal-circle {
+        margin: 8px 0;
+        transform: scale(0.9);
+        /* 封印サークルを少し小さくする */
+    }
+
+    .seal-status {
+        margin-top: 4px;
+        font-size: 12px;
+    }
+
+    #seal-btn {
+        margin-top: 6px;
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}
+
+/* ▼ 調査メニュー：スマホでタブがデカすぎる問題を修正 */
+@media (max-width: 600px) {
+
+    /* タブ（証拠品 / メモ / 調査の進め方）ボタンを小さく */
+    .tab-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        margin-right: 4px;
+        border-radius: 6px;
+    }
+
+    /* タブ全体コンテナを圧迫しないように */
+    .menu-tabs {
+        padding: 4px 0;
+        margin-bottom: 6px;
+        gap: 4px;
+    }
+
+    /* メニュー本文エリア : 高さを多めに確保 */
+    #menu-content {
+        max-height: 65vh;
+        /* ← 表示領域を広く確保 */
+        padding: 6px 4px;
+        font-size: 13px;
+        line-height: 1.45;
+        overflow-y: auto;
+        /* ← 読みやすいスクロール */
+    }
+
+    /* 本文の見出しを少し小さく */
+    #menu-content p {
+        margin-bottom: 6px;
+        font-size: 13px;
+    }
+
+    #menu-content ul {
+        padding-left: 18px;
+        margin-bottom: 8px;
+    }
+
+    #menu-content li {
+        margin-bottom: 6px;
+        font-size: 13px;
+    }
+
+    /* 閉じるボタンもスマホ向けサイズに */
+    #menu-close {
+        padding: 6px 12px;
+        font-size: 12px;
+        margin-top: 6px;
+    }
+}
+
+@media (max-width: 600px) {
+    .seal-effect {
+        height: 90px;
+        /* ちょっと低めにして全体を縮める */
+        margin-top: 8px;
+        transform: scale(0.9);
+    }
+
+    .seal-effect::after {
+        font-size: 16px;
+        /* 文字も少し小さく */
+        bottom: 6px;
+        letter-spacing: 0.15em;
+    }
 }
