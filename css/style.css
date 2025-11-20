@@ -421,14 +421,20 @@ body {
    特定・封印画面 共通
    =============================== */
 
+/* 特定・封印などの中央ウィンドウ */
 .screen-inner {
-    margin: auto;
+    /* 画面中央寄せはしつつも、上下に少しマージンを取る */
+    margin: 8px auto;
+  
     width: min(480px, 90%);
+    max-height: calc(100% - 16px);  /* ★ 画面内に収まる最大高さ */
+    overflow-y: auto;               /* ★ 中身が多いときは中でスクロール */
+  
     background: #101018;
     border-radius: 16px;
     padding: 12px;
     border: 1px solid #333;
-}
+  }  
 
 .screen-inner h2 {
     margin-top: 0;
