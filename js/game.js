@@ -1,21 +1,11 @@
 // ==============================
-// 画面切り替えユーティリティ
+// 定数・グローバル
 // ==============================
-function showScreen(id) {
-    document.querySelectorAll(".screen").forEach((s) => s.classList.add("hidden"));
-    const el = document.getElementById(id);
-    if (el) el.classList.remove("hidden");
-}
-
-// ==============================
-// 定数・デバッグフラグ
-// ==============================
-
 const SAVE_KEY = "kaiji_center_save_v1";
+const INTRO_FLAG_KEY = "kaiji_center_intro_seen";
 
-// テスト用：true にすると timeWindow / locationType を無視して
-// 「一度見た once シーン以外は全部候補」にする
-const DEBUG_IGNORE_SCENE_CONDITION = true;
+// テスト用：true にすると timeWindow / locationType 無視（once だけ有効）
+const DEBUG_IGNORE_SCENE_CONDITION = false;
 
 // 読み込むシナリオJSONのID一覧（data/xxx.json）
 const SCENARIO_IDS = [
@@ -28,51 +18,11 @@ const SCENARIO_IDS = [
 // シナリオキャッシュ
 const scenarioCache = {};
 
-// ==============================
-// セーブデータ管理
-// ==============================
-
-function loadSaveData() {
-    try {
-        const raw = localStorage.getItem(SAVE_KEY);
-        if (!raw) {
-            return {
-                completedScenarios: [],
-                seenScenes: {}, // {scenarioId: [sceneId, ...]}
-                flags: {}, // 好感度やルートフラグなど
-            };
-        }
-        const data = JSON.parse(raw);
-        if (!data.completedScenarios) data.completedScenarios = [];
-        if (!data.seenScenes) data.seenScenes = {};
-        if (!data.flags) data.flags = {};
-        return data;
-    } catch (e) {
-        console.warn("save load error:", e);
-        return {
-            completedScenarios: [],
-            seenScenes: {},
-            flags: {},
-        };
-    }
-}
-
-function saveGame(data) {
-    try {
-        localStorage.setItem(SAVE_KEY, JSON.stringify(data));
-    } catch (e) {
-        console.warn("save error:", e);
-    }
-}
-
-// ==============================
 // ゲーム状態
-// ==============================
-
 const gameState = {
     evidenceUnlocked: false,
     memoUnlocked: false,
-    phase: "intro", // intro → identify → seal → outro → end
+    phase: "intro", // intro → identify → seal → outro
     currentScenario: null,
     currentScene: null,
 };
@@ -109,16 +59,58 @@ let leafletMap = null;
 let leafletMarkerLayer = null;
 
 // ==============================
+// ユーティリティ
+// ==============================
+function showScreen(id) {
+    document.querySelectorAll(".screen").forEach((s) => s.classList.add("hidden"));
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
+}
+
+// ==============================
+// セーブデータ管理
+// ==============================
+function loadSaveData() {
+    try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (!raw) {
+            return {
+                completedScenarios: [],
+                seenScenes: {},
+                flags: {},
+            };
+        }
+        const data = JSON.parse(raw);
+        if (!data.completedScenarios) data.completedScenarios = [];
+        if (!data.seenScenes) data.seenScenes = {};
+        if (!data.flags) data.flags = {};
+        return data;
+    } catch (e) {
+        console.warn("save load error:", e);
+        return {
+            completedScenarios: [],
+            seenScenes: {},
+            flags: {},
+        };
+    }
+}
+
+function saveGame(data) {
+    try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+    } catch (e) {
+        console.warn("save error:", e);
+    }
+}
+
+// ==============================
 // シナリオ読み込み・選択
 // ==============================
-
 async function loadScenarioJSON(id) {
     if (scenarioCache[id]) return scenarioCache[id];
     const path = `data/${id}.json`;
     const res = await fetch(path);
-    if (!res.ok) {
-        throw new Error(`シナリオ読み込み失敗: ${id}`);
-    }
+    if (!res.ok) throw new Error(`シナリオ読み込み失敗: ${id}`);
     const json = await res.json();
     scenarioCache[id] = json;
     return json;
@@ -137,14 +129,14 @@ async function loadAllScenarios() {
     return list;
 }
 
-// 位置情報からざっくりロケーションタイプ推定（本番ではちゃんと判定に置き換えてOK）
+// 位置情報からざっくりロケーションタイプ推定（暫定）
 function getLocationTypeFromLatLng(lat, lng) {
     const types = ["RESIDENTIAL", "STATION", "SEASIDE"];
     const idx = Math.abs(Math.floor((lat + lng) * 1000)) % types.length;
     return types[idx];
 }
 
-// フラグ条件（好感度 etc）を満たしているか
+// フラグ条件（好感度など）
 function sceneFlagConditionsOk(scene, save) {
     const flags = save.flags || {};
     const cond = scene.conditions;
@@ -181,24 +173,19 @@ function isSceneAvailableNow(scene, locType, seenList) {
     const once = scene.once !== false; // デフォルト true
     const save = loadSaveData();
 
-    // フラグ条件
     if (!sceneFlagConditionsOk(scene, save)) return false;
 
-    // テストモード：時間／場所条件を無視して once だけ見る
     if (DEBUG_IGNORE_SCENE_CONDITION) {
         if (once && seenList.includes(scene.id)) return false;
         return true;
     }
 
-    // once:true & 既に見たら除外
     if (once && seenList.includes(scene.id)) return false;
 
-    // 位置条件
     if (scene.locationType && locType && scene.locationType !== locType) {
         return false;
     }
 
-    // 時間条件
     if (scene.timeWindow) {
         const now = new Date();
         const hour = now.getHours();
@@ -217,7 +204,7 @@ function isSceneAvailableNow(scene, locType, seenList) {
     return true;
 }
 
-// シーン終了時に「見た」＆シナリオ完了チェック
+// シーンを「見た」と記録＆シナリオ完了判定
 function markSceneSeenAndMaybeComplete() {
     const scenario = gameState.currentScenario;
     const scene = gameState.currentScene;
@@ -232,7 +219,6 @@ function markSceneSeenAndMaybeComplete() {
         seenList.push(scene.id);
     }
 
-    // once:true なシーンがすべて見終わったらシナリオ完了扱い
     const scenes = scenario.scenes || [];
     const onceScenes = scenes.filter((s) => s.once !== false);
     const allOnceSeen =
@@ -246,7 +232,7 @@ function markSceneSeenAndMaybeComplete() {
     saveGame(save);
 }
 
-// 現在のセーブ状態から「今遊べるシーン」を選ぶ
+// 「今やるべき章」からシーンを選ぶ
 async function pickSceneForCurrentState(latLng) {
     const save = loadSaveData();
     const all = await loadAllScenarios();
@@ -254,12 +240,10 @@ async function pickSceneForCurrentState(latLng) {
 
     const completed = save.completedScenarios || [];
 
-    // 前提条件を満たしているシナリオを chapter 順に並べる
     const unlocked = all
         .filter((sc) => {
             const pre = sc.prerequisites || [];
             if (sc.isPrologue) {
-                // プロローグは未クリアのときだけ候補
                 return !completed.includes(sc.id);
             }
             return pre.every((pid) => completed.includes(pid));
@@ -272,7 +256,7 @@ async function pickSceneForCurrentState(latLng) {
 
     if (unlocked.length === 0) return null;
 
-    // ▼「まだ完全クリアしていないシナリオ」の最小chapterを探す
+    // まだ「完全クリアしていない」最小chapterを探す
     let targetChapter = null;
     for (const sc of unlocked) {
         const scenes = sc.scenes || [];
@@ -287,13 +271,11 @@ async function pickSceneForCurrentState(latLng) {
         }
     }
 
-    // 全部クリア済みなら「一番最後のシナリオをリプレイ」扱い
     let candidateScenarios;
     if (targetChapter === null) {
         const last = unlocked.at(-1);
         candidateScenarios = last ? [last] : [];
     } else {
-        // ★今やるべき章だけを候補にする → 2話に戻らない
         candidateScenarios = unlocked.filter(
             (sc) => (sc.chapter || 0) === targetChapter
         );
@@ -305,7 +287,6 @@ async function pickSceneForCurrentState(latLng) {
         ? getLocationTypeFromLatLng(latLng[0], latLng[1])
         : null;
 
-    // 候補章の中から、今出せるシーンを探す
     for (const scenario of candidateScenarios) {
         const scenes = scenario.scenes || [];
         const seenList = save.seenScenes[scenario.id] || [];
@@ -318,7 +299,6 @@ async function pickSceneForCurrentState(latLng) {
                 candidates[Math.floor(Math.random() * candidates.length)];
             return { scenario, scene };
         } else {
-            // once:true シーンを全部見ていたらクリア扱いにしておく
             const onceScenes = scenes.filter((s) => s.once !== false);
             const allOnceSeen =
                 onceScenes.length > 0 &&
@@ -331,7 +311,6 @@ async function pickSceneForCurrentState(latLng) {
         }
     }
 
-    // それでも出せるシーンがない場合、とりあえず対象章の最初のシーン
     const sc = candidateScenarios[0];
     const scScenes = sc.scenes || [];
     if (sc && scScenes.length > 0) {
@@ -343,7 +322,6 @@ async function pickSceneForCurrentState(latLng) {
 // ==============================
 // 立ち絵制御
 // ==============================
-
 function setActiveSpeaker(speakerName) {
     const left = document.getElementById("char-left");
     const right = document.getElementById("char-right");
@@ -388,7 +366,6 @@ function applyExpressionForLine(line) {
 // ==============================
 // 選択肢の効果（好感度など）
 // ==============================
-
 function applyChoiceEffects(choice) {
     if (!choice.effects || !Array.isArray(choice.effects)) return;
 
@@ -413,14 +390,14 @@ function applyChoiceEffects(choice) {
 }
 
 // ==============================
-// 会話まわり
+// 会話パート
 // ==============================
-
 function showChoiceLine(line) {
     const choiceContainer = document.getElementById("choice-container");
     const nameBox = document.getElementById("speaker-name");
     const textBox = document.getElementById("dialog-text");
-    const lines = dialogScript[gameState.phase] || [];
+    const phase = gameState.phase;
+    const lines = dialogScript[phase] || [];
     if (!choiceContainer || !textBox) return;
 
     if (line.text) textBox.textContent = line.text;
@@ -436,7 +413,6 @@ function showChoiceLine(line) {
         btn.textContent = choice.text || "選択";
 
         btn.addEventListener("click", () => {
-            // ★ 選択肢の効果を適用（好感度・ルートなど）
             applyChoiceEffects(choice);
 
             choiceContainer.classList.add("hidden");
@@ -475,27 +451,36 @@ function renderDialogLine() {
     const choiceContainer = document.getElementById("choice-container");
     if (choiceContainer) choiceContainer.classList.add("hidden");
 
-    // goto
+    // goto ハンドリング
     if (line.goto) {
         if (line.goto === "identify") {
+            // dialog-only に identify は行かせない
+            if (
+                gameState.currentScene &&
+                gameState.currentScene.type === "dialog-only"
+            ) {
+                markSceneSeenAndMaybeComplete();
+                startFadeOut();
+                return;
+            }
+
             if (identifyBlanks.length > 0) {
+                gameState.phase = "identify";
                 showScreen("screen-identify");
             } else {
-                // 特定項目がない場合はそのまま封印へ
                 gameState.phase = "seal";
                 showScreen("screen-seal");
             }
             return;
         }
         if (line.goto === "end") {
-            // シーン終了マーク
             markSceneSeenAndMaybeComplete();
             startFadeOut();
             return;
         }
     }
 
-    // system
+    // system コマンド
     if (line.system === "unlockEvidence") {
         gameState.evidenceUnlocked = true;
         gameState.memoUnlocked = true;
@@ -521,7 +506,6 @@ function renderDialogLine() {
 // ==============================
 // 調査メニュー
 // ==============================
-
 function renderMenu(tab) {
     const content = document.getElementById("menu-content");
     if (!content) return;
@@ -539,7 +523,8 @@ function renderMenu(tab) {
     `;
     } else if (tab === "evidence") {
         if (!gameState.evidenceUnlocked) {
-            html = "<p>まだ有効な証拠はありません。会話を進めて情報を集めてください。</p>";
+            html =
+                "<p>まだ有効な証拠はありません。会話を進めて情報を集めてください。</p>";
         } else if (s && s.menu && s.menu.evidence) {
             html = s.menu.evidence;
         } else {
@@ -561,9 +546,8 @@ function renderMenu(tab) {
 }
 
 // ==============================
-// 特定パート（チップ式）
+// 特定パート
 // ==============================
-
 function renderIdentifyBlanks() {
     const container = document.getElementById("fill-blanks");
     if (!container) return;
@@ -692,7 +676,8 @@ function checkIdentity() {
     const feedback = document.getElementById("identify-feedback");
     if (!allChosen) {
         if (feedback) {
-            feedback.textContent = "まだ選んでいない項目があります。すべて選んでください。";
+            feedback.textContent =
+                "まだ選んでいない項目があります。すべて選んでください。";
         }
         return;
     }
@@ -718,10 +703,9 @@ function checkIdentity() {
 // ==============================
 // 封印パート
 // ==============================
-
 let sealTimer = null;
 let sealProgress = 0;
-const HOLD_TIME = 1500; // ms
+const HOLD_TIME = 1500;
 
 function startSealHold() {
     if (sealTimer) return;
@@ -770,9 +754,8 @@ function cancelSealHold() {
 // ==============================
 // 黒フェード → マップに戻る
 // ==============================
-
 function resetGameToStart() {
-    // ▼ 封印UIのリセット（追加）
+    // 封印UIリセット
     const gauge = document.getElementById("seal-gauge");
     if (gauge) gauge.style.width = "0%";
     const effect = document.getElementById("seal-effect");
@@ -823,9 +806,8 @@ function startFadeOut() {
 }
 
 // ==============================
-// マップ画面（位置情報＋レーダー）
+// マップ画面
 // ==============================
-
 function initMapScreen() {
     const status = document.getElementById("map-status");
     const startBtn = document.getElementById("start-investigation");
@@ -888,7 +870,6 @@ async function runMapScenario(centerLatLng) {
         centerLatLng = playerLatLng || [35.6595, 139.7005];
     }
 
-    // シーン選択
     const picked = await pickSceneForCurrentState(centerLatLng);
     if (!picked) {
         if (status) status.textContent = "利用可能なシナリオがありません。";
@@ -912,7 +893,6 @@ async function runMapScenario(centerLatLng) {
         if (bg) bgImg.src = bg;
     }
 
-    // Leaflet マップ
     try {
         if (!leafletMap) {
             leafletMap = L.map("real-map", {
@@ -937,7 +917,6 @@ async function runMapScenario(centerLatLng) {
         console.warn("Leaflet error:", e);
     }
 
-    // レーダーの赤点はランダム配置
     if (kaijiDot) {
         const x = 20 + Math.random() * 60;
         const y = 20 + Math.random() * 60;
@@ -960,13 +939,54 @@ async function runMapScenario(centerLatLng) {
 }
 
 // ==============================
-// 初期化
+// 初期化（ブート画面＋初回イントロ）
 // ==============================
-
 document.addEventListener("DOMContentLoaded", () => {
-    showScreen("screen-map");
-    initMapScreen();
+    const boot = document.getElementById("boot-screen");
+    const bootRoot = document.getElementById("boot-root");
 
+    const introSeen = localStorage.getItem(INTRO_FLAG_KEY) === "1";
+    let initialScreen = introSeen ? "screen-map" : "screen-intro";
+
+    function showInitialScreen() {
+        if (initialScreen === "screen-map") {
+            showScreen("screen-map");
+            initMapScreen();
+        } else {
+            showScreen("screen-intro");
+        }
+    }
+
+    // PSP風ブートは毎回再生
+    if (boot && bootRoot) {
+        setTimeout(() => {
+            bootRoot.classList.add("show-sce");
+        }, 100);
+
+        setTimeout(() => {
+            bootRoot.classList.add("show-psp");
+        }, 2600);
+
+        setTimeout(() => {
+            boot.classList.add("hidden");
+            showInitialScreen();
+        }, 4800);
+    } else {
+        showInitialScreen();
+    }
+
+    // 初回説明画面からスタートボタン
+    const startIntroBtn = document.getElementById("btn-start-game");
+    if (startIntroBtn) {
+        startIntroBtn.addEventListener("click", () => {
+            localStorage.setItem(INTRO_FLAG_KEY, "1");
+            initialScreen = "screen-map";
+            showScreen("screen-map");
+            initMapScreen();
+        });
+    }
+
+    // 会話スタート（マップ画面の「調査を開始する」）
     const startBtn = document.getElementById("start-investigation");
     if (startBtn) {
         startBtn.addEventListener("click", () => {
@@ -983,6 +1003,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 会話画面クリックで次へ（選択肢・メニューを除く）
     const dialogScreen = document.getElementById("screen-dialog");
     if (dialogScreen) {
         dialogScreen.addEventListener("click", (e) => {
@@ -998,6 +1019,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 調査メニューボタン
     const menuBtn = document.getElementById("menu-btn");
     if (menuBtn) {
         menuBtn.addEventListener("click", () => {
@@ -1013,6 +1035,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 特定パートからの調査メニューボタン
     const menuBtnIdentify = document.getElementById("menu-btn-identify");
     if (menuBtnIdentify) {
         menuBtnIdentify.addEventListener("click", () => {
@@ -1028,6 +1051,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 調査メニューのタブ
     document.querySelectorAll(".tab-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
             document
@@ -1048,11 +1072,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 特定ボタン
     const confirmIdentityBtn = document.getElementById("confirm-identity");
     if (confirmIdentityBtn) {
         confirmIdentityBtn.addEventListener("click", checkIdentity);
     }
 
+    // 封印ボタン長押し
     const sealBtn = document.getElementById("seal-btn");
     if (sealBtn) {
         const startEvents = ["mousedown", "touchstart"];

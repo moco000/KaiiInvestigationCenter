@@ -17,6 +17,32 @@
 </head>
 
 <body>
+    <!-- ▼ 起動画面（PSR風ブート） -->
+    <div id="boot-screen">
+        <div class="boot-root" id="boot-root">
+
+            <div class="boot-centered sce-logo">
+                TONY COMPUTER
+                <span>ENTERTAINMENT</span>
+                <div class="sce-diamond"></div>
+            </div>
+
+            <div class="boot-centered psp-logo">
+                <div class="psp-logo-main">PSR</div>
+                <div class="psp-logo-sub">Play Stories Revolution</div>
+                <div class="light-sweep"></div>
+            </div>
+
+            <div class="wave">
+                <div class="wave-line"></div>
+                <div class="wave-line"></div>
+                <div class="wave-line"></div>
+            </div>
+
+        </div>
+    </div>
+    <!-- ▲ 起動画面 -->
+
     <!-- 16:9 固定ゲームキャンバス -->
     <div class="game-wrapper">
 
@@ -32,6 +58,45 @@
         <div id="identify-fail-overlay" class="identify-fail-overlay hidden">
             <div class="identify-fail-text">特定失敗</div>
         </div>
+
+        <!-- ▼ 0. タイトル／遊び方画面 -->
+        <section id="screen-intro" class="screen">
+            <div class="intro-inner">
+                <h1 class="intro-title">怪異調査センター</h1>
+
+                <div class="intro-block">
+                    <h2>このゲームについて</h2>
+                    <p>
+                        あなたは「怪異調査センター」の調査員として、<br>
+                        現代の街に潜む怪異の噂を追い、正体を特定し、封印していきます。
+                    </p>
+                </div>
+
+                <div class="intro-block">
+                    <h2>遊び方</h2>
+                    <ul>
+                        <li>位置情報（またはテスト用座標）を元に、周辺マップが表示されます。</li>
+                        <li>マップ上の怪異反応が見つかったら「調査を開始する」ボタンで現場へ。</li>
+                        <li>会話パートで証言や証拠を集め、「調査メニュー」から情報を確認します。</li>
+                        <li>最後に「怪異特定」パートでワードを選び、正体を特定します。</li>
+                        <li>特定に成功すると封印フェーズに進み、長押しで封印します。</li>
+                    </ul>
+                </div>
+
+                <div class="intro-block">
+                    <h2>位置情報について</h2>
+                    <p>
+                        ブラウザから位置情報利用の確認ダイアログが表示されます。<br>
+                        許可すると、現在地付近の怪異シナリオが選ばれやすくなります。<br>
+                        拒否した場合は、テスト用の座標でゲームが進行します。
+                    </p>
+                </div>
+
+                <button id="btn-start-game" class="main-btn">
+                    調査を開始する
+                </button>
+            </div>
+        </section>
 
         <!-- ▼ 1. マップ画面（レーダー＋実マップ円） -->
         <section id="screen-map" class="screen">
