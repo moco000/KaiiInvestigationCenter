@@ -1,0 +1,139 @@
+{
+    "id": "main_04_ending_chief",
+    "title": "【ED】所長ルート：静かな夜明け",
+    "chapter": 4,
+    "prerequisites": [
+        "main_01_prologue",
+        "main_02_city",
+        "main_03_seaside"
+    ],
+    "isEnding": true,
+    "once": true,
+    "scenes": [
+        {
+            "id": "chief_good_ending",
+            "type": "dialog-only",
+            "background": "assets/bg/bg_office.jpg",
+            "locationType": null,
+            "conditions": {
+                "minFlags": {
+                    "chief_affection": 3
+                },
+                "equalsFlags": {
+                    "route": "chief"
+                }
+            },
+            "lines": [
+                {
+                    "speaker": "調査員",
+                    "text": "……所長、報告書、提出しました。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "こんな時間まで残ったのは、お前が初めてだ。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "最近、このセンターの“重さ”がようやく分かってきた気がします。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "……重さだけ分かっても仕方ない。抱えられるかどうかだ。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "抱えられるようになりたい。いつか、あなたみたいに。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "……生意気を言うようになったな。"
+                },
+                {
+                    "speaker": "所長",
+                    "expression": "soft",
+                    "text": "だが、その生意気さが現場では命を救うこともある。忘れるな。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "……所長。"
+                },
+                {
+                    "speaker": "所長",
+                    "expression": "smile",
+                    "text": "今日は帰れ。夜明けが来るぞ。怪異の出番はしばらくない。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "……ありがとうございます。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "次は、お前の番だ。……街を頼む。"
+                },
+                {
+                    "system": "unlockEnding",
+                    "text": "【ED：所長ルート GOOD】を達成しました。"
+                },
+                {
+                    "goto": "end"
+                }
+            ]
+        },
+        {
+            "id": "chief_bad_or_neutral",
+            "type": "dialog-only",
+            "background": "assets/bg/bg_office.jpg",
+            "locationType": null,
+            "conditions": {
+                "minFlags": {
+                    "chief_affection": 1
+                },
+                "equalsFlags": {
+                    "route": "chief"
+                }
+            },
+            "lines": [
+                {
+                    "speaker": "調査員",
+                    "text": "……報告書、提出しました。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "ああ。そこに置いていけ。"
+                },
+                {
+                    "speaker": "所長",
+                    "expression": "serious",
+                    "text": "現場の判断は……悪くなかった。ただ、まだ“迷い”が多いな。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "……すみません。次はもっと……"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "謝るな。必要なのは、報告書の質じゃない。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "“怪異に呑まれないこと”だ。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "……はい。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "帰れ。夜は長い。考える時間はいくらでもある。"
+                },
+                {
+                    "system": "unlockEnding",
+                    "text": "【ED：所長ルート BAD/NEUTRAL】を達成しました。"
+                },
+                {
+                    "goto": "end"
+                }
+            ]
+        }
+    ]
+}

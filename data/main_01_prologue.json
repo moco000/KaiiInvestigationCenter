@@ -1,0 +1,23 @@
+{
+    "id": "main_01_prologue",
+        "title": "プロローグ：怪異調査センターへようこそ",
+            "chapter": 1,
+                "isPrologue": true,
+                    "unlocks": ["main_02_city"],
+
+                        "scenes": [
+                            {
+                                "id": "prologue_intro",
+                                "type": "dialog-only",
+                                "background": "assets/bg/bg_office.jpg",
+                                "once": true,
+                                "lines": [
+                                    { "speaker": "所長", "text": "よく来たな、新入り。" },
+                                    { "speaker": "調査員", "text": "本日付で配属になりました。" },
+                                    { "speaker": "所長", "text": "ここは怪異調査センター。怪異を探し、特定し、封印するのが仕事だ。" },
+                                    { "speaker": "所長", "text": "……まぁ難しいことはいい。まずは街を歩きながら慣れていけ。" },
+                                    { "goto": "end" }
+                                ]
+                            }
+                        ]
+}

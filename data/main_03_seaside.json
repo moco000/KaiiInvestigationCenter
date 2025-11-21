@@ -1,0 +1,50 @@
+{
+  "id": "main_03_seaside",
+  "title": "第2話：海辺の気配",
+  "chapter": 3,
+  "prerequisites": ["main_01_prologue", "main_02_city"],
+  "unlocks": ["main_04_ending_chief"],
+
+  "scenes": [
+    {
+      "id": "seaside_evening",
+      "type": "kaiji",
+      "background": "assets/bg/bg_seaside_evening.jpg",
+      "locationType": "SEASIDE",
+      "timeWindow": { "startHour": 15, "endHour": 22 },
+      "once": true,
+      "lines": [
+        { "speaker": "助手", "text": "海風にまぎれて妙な反応……" },
+        { "speaker": "調査員", "text": "波音に混じって何か聞こえる。" },
+        { "goto": "identify" }
+      ],
+      "identifyBlanks": [
+        {
+          "label": "傾向",
+          "choices": ["湿気を帯びている", "乾いた音がする", "冷気を伴う"],
+          "correctIndex": 0
+        }
+      ],
+      "menu": {
+        "evidence": "<p>濡れた足跡。</p>",
+        "memo": "<p>海辺に現れる。湿気を伴う怪異。</p>"
+      }
+    },
+
+    {
+      "id": "lighthouse_midnight",
+      "type": "dialog-only",
+      "background": "assets/bg/bg_lighthouse_night.jpg",
+      "locationType": "SEASIDE",
+      "timeWindow": { "startHour": 0, "endHour": 24 },
+      "once": true,
+      "lines": [
+        { "speaker": "調査員", "text": "……静かだな。" },
+        { "speaker": "助手", "text": "波以外の音がしません。" },
+        { "goto": "end" }
+      ],
+      "identifyBlanks": [],
+      "menu": {}
+    }
+  ]
+}

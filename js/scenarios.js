@@ -30,6 +30,12 @@ const SCENARIOS = [
             spawnOffset: { xPercent: 70, yPercent: 25 },
         },
 
+        // ★出現時間帯（24h表記）例：11:00〜翌11:59
+        timeWindow: {
+            startHour: 11,
+            endHour: 12,  // 日付またぎは start > end で表現
+        },
+
         background: "assets/bg/bg_seaside_night.jpg",
 
         introLines: [
@@ -727,4 +733,88 @@ const SCENARIOS = [
     },
 
     // ★この下に新しいシナリオを追加していく
+    {
+        id: "chief_meeting",
+        title: "所長との定例ミーティング",
+        type: "dialog-only",   // ★これが重要（game.js がこのタイプを見て分岐する）
+
+        background: "assets/bg/bg_office.jpg",
+
+        introLines: [
+            {
+                speaker: "所長",
+                expression: "neutral",
+                text: "お、来たな。今月の調査報告をまとめてもらおうか。",
+            },
+            {
+                speaker: "調査員",
+                expression: "serious",
+                text: "はい。最近は住宅街での怪異発生件数が増えています。",
+            },
+            {
+                speaker: "所長",
+                expression: "smile",
+                text: "お前の目で見て感じたことを聞きたい。数字じゃなくて、“空気”の話だ。",
+            },
+            {
+                speaker: "調査員",
+                text: "……感じること、と言いますと？",
+            },
+
+            // ▼ 選択肢もOK（そのまま次の行に進む）
+            {
+                speaker: "所長",
+                expression: "neutral",
+                text: "最近の怪異の傾向、どっちだと思う？",
+                choices: [
+                    { text: "人間を狙うようになっている気がする", gotoLabel: "ans1" },
+                    { text: "むしろ大人しくなってきている", gotoLabel: "ans2" }
+                ]
+            },
+
+            {
+                label: "ans1",
+                speaker: "調査員",
+                text: "確かに……直接干渉する怪異が増えている印象があります。",
+            },
+            {
+                label: "ans1",
+                speaker: "所長",
+                expression: "angry",
+                text: "やはりか。センターの役目がますます重要になるな。",
+            },
+
+            {
+                label: "ans2",
+                speaker: "調査員",
+                text: "むしろ最近は痕跡だけ残して消える例も多いですね。",
+            },
+            {
+                label: "ans2",
+                speaker: "所長",
+                expression: "neutral",
+                text: "ふむ……興味深いな。何か理由があるかもしれん。",
+            },
+
+            // ▼ 共通
+            {
+                speaker: "所長",
+                expression: "smile",
+                text: "あまり無理をするなよ。お前が倒れたら困るんだ。",
+            },
+            {
+                speaker: "調査員",
+                expression: "neutral",
+                text: "……ありがとうございます、所長。",
+            },
+            {
+                goto: "end"
+            }
+        ],
+
+        // 怪異特定なしなのでこれらは空
+        identifyBlanks: [],
+        menu: {},
+    }
+
 ];
