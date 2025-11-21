@@ -15,7 +15,7 @@ const SAVE_KEY = "kaiji_center_save_v1";
 
 // テスト用：true にすると timeWindow / locationType を無視して
 // 「一度見た once シーン以外は全部候補」にする
-const DEBUG_IGNORE_SCENE_CONDITION = false;
+const DEBUG_IGNORE_SCENE_CONDITION = true;
 
 // 読み込むシナリオJSONのID一覧（data/xxx.json）
 const SCENARIO_IDS = [
