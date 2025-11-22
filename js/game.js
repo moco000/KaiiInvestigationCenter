@@ -992,10 +992,41 @@ async function runMapScenario(centerLatLng) {
     }
 
     const picked = await pickSceneForCurrentState(centerLatLng);
-    if (!picked) {
-        if (status) status.textContent = "利用可能なシナリオがありません。";
-        return;
+if (!picked) {
+    if (status) status.textContent = "今この周辺に怪異反応はありません。";
+
+    // ▼ シナリオなしでもマップは表示させる
+    try {
+        if (!leafletMap) {
+            leafletMap = L.map("real-map", {
+                zoomControl: false,
+                attributionControl: false,
+            }).setView(centerLatLng, 16);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                maxZoom: 19,
+            }).addTo(leafletMap);
+            leafletMarkerLayer = L.layerGroup().addTo(leafletMap);
+            setTimeout(() => leafletMap.invalidateSize(), 100);
+        } else {
+            leafletMap.setView(centerLatLng, 16);
+            setTimeout(() => leafletMap.invalidateSize(), 100);
+        }
+
+        if (leafletMarkerLayer) {
+            leafletMarkerLayer.clearLayers();
+            L.marker(centerLatLng, { title: "現在地" }).addTo(leafletMarkerLayer);
+        }
+    } catch (e) {
+        console.warn("Leaflet error:", e);
     }
+
+    // ▼ 調査開始ボタンは非表示
+    if (startBtn) startBtn.classList.add("hidden");
+    if (kaijiDot) kaijiDot.classList.add("hidden");
+
+    // ▼ シナリオは出さずに終了
+    return;
+}
     const scenario = picked.scenario;
     const scene = picked.scene;
 
