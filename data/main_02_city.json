@@ -298,7 +298,7 @@
             "background": "assets/bg/bg_station_evening.jpg",
             "locationType": "STATION",
             "timeWindow": {
-                "startHour": 16,
+                "startHour": 17,
                 "endHour": 24
             },
             "once": true,
