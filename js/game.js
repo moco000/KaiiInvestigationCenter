@@ -106,7 +106,7 @@ const SAVE_KEY = "kaiji_center_save_v1";
 const INTRO_FLAG_KEY = "kaiji_center_intro_seen";
 
 // テスト用：true にすると timeWindow / locationType 無視（once だけ有効）
-const DEBUG_IGNORE_SCENE_CONDITION = true;
+const DEBUG_IGNORE_SCENE_CONDITION = false;
 
 // 読み込むシナリオJSONのID一覧（data/xxx.json）
 const SCENARIO_IDS = [
@@ -436,12 +436,8 @@ async function pickSceneForCurrentState(latLng) {
         }
     }
 
-    const sc = candidateScenarios[0];
-    const scScenes = sc.scenes || [];
-    if (sc && scScenes.length > 0) {
-        return { scenario: sc, scene: scScenes[0] };
-    }
-    return null;
+    // それでも出せるシーンがない場合は null を返す
+  return null;
 }
 
 // ==============================
