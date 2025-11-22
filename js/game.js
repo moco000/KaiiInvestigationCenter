@@ -1,4 +1,105 @@
 // ==============================
+// 地域判定ルール（簡易版）
+// ==============================
+// ※必要に応じて増やしてOK
+const LOCATION_AREAS = [
+  // ======== 海沿いエリア ========
+
+  // 東京湾沿い（お台場〜豊洲）
+  {
+    areaType: "SEASIDE",
+    latMin: 35.61,
+    latMax: 35.66,
+    lngMin: 139.75,
+    lngMax: 139.81,
+  },
+
+  // 湘南（江ノ島周辺）
+  {
+    areaType: "SEASIDE",
+    latMin: 35.29,
+    latMax: 35.32,
+    lngMin: 139.47,
+    lngMax: 139.50,
+  },
+
+  // 大阪南港
+  {
+    areaType: "SEASIDE",
+    latMin: 34.61,
+    latMax: 34.66,
+    lngMin: 135.38,
+    lngMax: 135.44,
+  },
+
+  // ======== 繁華街 / 駅前 ========
+
+  // 新宿駅周辺
+  {
+    areaType: "STATION",
+    latMin: 35.687,
+    latMax: 35.696,
+    lngMin: 139.692,
+    lngMax: 139.704,
+  },
+
+  // 渋谷駅周辺
+  {
+    areaType: "STATION",
+    latMin: 35.655,
+    latMax: 35.663,
+    lngMin: 139.695,
+    lngMax: 139.705,
+  },
+
+  // 池袋駅周辺
+  {
+    areaType: "STATION",
+    latMin: 35.725,
+    latMax: 35.735,
+    lngMin: 139.705,
+    lngMax: 139.715,
+  },
+
+  // 梅田（大阪駅）周辺
+  {
+    areaType: "STATION",
+    latMin: 34.695,
+    latMax: 34.706,
+    lngMin: 135.490,
+    lngMax: 135.505,
+  },
+
+  // ======== 住宅街（静かなエリア） ========
+
+  // 杉並区あたり
+  {
+    areaType: "RESIDENTIAL",
+    latMin: 35.67,
+    latMax: 35.71,
+    lngMin: 139.60,
+    lngMax: 139.64,
+  },
+
+  // 練馬あたり
+  {
+    areaType: "RESIDENTIAL",
+    latMin: 35.73,
+    latMax: 35.76,
+    lngMin: 139.63,
+    lngMax: 139.66,
+  },
+
+  // 世田谷あたり
+  {
+    areaType: "RESIDENTIAL",
+    latMin: 35.62,
+    latMax: 35.66,
+    lngMin: 139.60,
+    lngMax: 139.64,
+  },
+];
+// ==============================
 // 定数・グローバル
 // ==============================
 const SAVE_KEY = "kaiji_center_save_v1";
