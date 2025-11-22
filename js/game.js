@@ -232,9 +232,33 @@ async function loadAllScenarios() {
 
 // 位置情報からざっくりロケーションタイプ推定（暫定）
 function getLocationTypeFromLatLng(lat, lng) {
-    const types = ["RESIDENTIAL", "STATION", "SEASIDE"];
-    const idx = Math.abs(Math.floor((lat + lng) * 1000)) % types.length;
-    return types[idx];
+  // 1) まず手動エリアリストで判定
+  for (const area of LOCATION_AREAS) {
+    if (
+      lat >= area.latMin &&
+      lat <= area.latMax &&
+      lng >= area.lngMin &&
+      lng <= area.lngMax
+    ) {
+      return area.areaType;
+    }
+  }
+
+  // 2) それ以外は簡易ヒューリスティック
+  // 日本っぽい経度帯にいる前提でざっくり判定する例
+
+  // 太平洋側・日本海側の端に近い → 海沿い寄りとみなす
+  if (lng < 131 || lng > 142) {
+    return "SEASIDE";
+  }
+
+  // 緯度が低め（西日本〜首都圏） & 経度が中間帯 → 都市圏扱いにして駅前寄り
+  if (lat >= 34 && lat <= 36.5 && lng >= 135 && lng <= 141) {
+    return "STATION";
+  }
+
+  // それ以外は住宅街扱い
+  return "RESIDENTIAL";
 }
 
 // フラグ条件（好感度など）
