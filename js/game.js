@@ -106,7 +106,7 @@ const SAVE_KEY = "kaiji_center_save_v1";
 const INTRO_FLAG_KEY = "kaiji_center_intro_seen";
 
 // テスト用：true にすると timeWindow / locationType 無視（once だけ有効）
-const DEBUG_IGNORE_SCENE_CONDITION = false;
+const DEBUG_IGNORE_SCENE_CONDITION = true;
 
 // 読み込むシナリオJSONのID一覧（data/xxx.json）
 const SCENARIO_IDS = [
