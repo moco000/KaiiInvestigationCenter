@@ -342,7 +342,7 @@ body {
   inset: 0;
 }
 
-/* クリック領域（普段は見えなくてOKだが、テスト時は枠線付けてもいい） */
+/* クリック領域（テスト中は枠線アリでもOK） */
 .hotspot-area {
   border: 1px dashed rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.02);
