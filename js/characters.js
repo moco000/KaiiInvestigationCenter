@@ -95,6 +95,10 @@ const CHARACTERS = {
         },
     },
 };
+const KAII_SPRITES = {
+  drowned_spirit: "assets/kaiji/drowned_spirit.png",
+  child_steps:    "assets/kaiji/child_steps.png",
+};
 
 /**
  * SPEAKER_ALIAS

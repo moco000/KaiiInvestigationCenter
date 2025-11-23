@@ -1,664 +1,710 @@
 {
-  "id": "main_02_city",
-  "title": "第1話：都市のざわめき",
-  "chapter": 2,
-  "prerequisites": [
-    "main_01_prologue"
-  ],
-  "unlocks": [
-    "main_03_seaside"
-  ],
-  "scenes": [
-    {
-      "id": "residential_night",
-      "type": "kaiji",
-      "background": "assets/bg/bg_residential_night.jpg",
-      "locationType": "RESIDENTIAL",
-      "timeWindow": {
-        "startHour": 18,
-        "endHour": 5
-      },
-      "once": true,
-      "lines": [
+    "id": "main_02_city",
+    "title": "第1話：都市のざわめき",
+    "chapter": 2,
+    "prerequisites": [
+        "main_01_prologue"
+    ],
+    "unlocks": [
+        "main_03_seaside"
+    ],
+    "scenes": [
         {
-          "speaker": "助手",
-          "text": "住宅街の怪異反応……ここですね。静かだけど、妙に耳がざわつきます。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "家の明かりはまばらだな。人はいるのに、“人気”が薄い。"
-        },
-        {
-          "speaker": "助手",
-          "text": "先日の通報は……『誰もいないはずの路地から、足音だけがついてくる』でしたっけ。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "まずは、どこから見るかだな。",
-          "choices": [
-            {
-              "text": "路地の細い方から回る",
-              "gotoLabel": "resi_route_alley"
+            "id": "residential_night",
+            "type": "kaiji",
+            "background": "assets/bg/bg_residential_night.jpg",
+            "locationType": "RESIDENTIAL",
+            "timeWindow": {
+                "startHour": 18,
+                "endHour": 5
             },
-            {
-              "text": "大通り側から全体を見る",
-              "gotoLabel": "resi_route_main"
-            },
-            {
-              "text": "公園の周りから様子を見る",
-              "gotoLabel": "resi_route_park"
-            }
-          ]
-        },
-        {
-          "label": "resi_route_alley",
-          "speaker": "助手",
-          "text": "路地、やっぱり暗いですね……足音が反響しやすそうです。"
-        },
-        {
-          "label": "resi_route_alley",
-          "speaker": "調査員",
-          "text": "こういう場所は、音の“気配”が形になりやすい。怪異には居心地がいいはずだ。"
-        },
-        {
-          "label": "resi_route_main",
-          "speaker": "助手",
-          "text": "大通りは車の音が多くて、足音はかき消されそうです。"
-        },
-        {
-          "label": "resi_route_main",
-          "speaker": "調査員",
-          "text": "それでも通報はあった。となると、よほど耳につく足音だったんだろうな。"
-        },
-        {
-          "label": "resi_route_park",
-          "speaker": "助手",
-          "text": "公園の横を抜けると、急に静かになりますね。さっきまで車の音がしていたのに。"
-        },
-        {
-          "label": "resi_route_park",
-          "speaker": "調査員",
-          "text": "静けさ自体が“異常”ということもある。怪異は音を奪う場合もあるからな。"
-        },
-        {
-          "speaker": "助手",
-          "text": "……あ、今、聞こえました？ 小さい足音。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "聞こえた。距離は……数メートル後ろか。"
-        },
-        {
-          "speaker": "助手",
-          "text": "どうします？",
-          "choices": [
-            {
-              "text": "あえて歩く速度を変えてみる",
-              "gotoLabel": "resi_choice_speed"
-            },
-            {
-              "text": "ここで立ち止まって様子を見る",
-              "gotoLabel": "resi_choice_wait"
-            },
-            {
-              "text": "路地の角に隠れて、姿を確認する",
-              "gotoLabel": "resi_choice_hide"
-            }
-          ]
-        },
-        {
-          "label": "resi_choice_wait",
-          "speaker": "調査員",
-          "text": "ここで止まる。足音がどう変化するか、よく聞け。"
-        },
-        {
-          "label": "resi_choice_wait",
-          "speaker": "助手",
-          "text": "……足音も止まりました。やっぱり“ついてきている”みたいです。"
-        },
-        {
-          "label": "resi_choice_speed",
-          "speaker": "調査員",
-          "text": "少し速く歩く。差が縮むのか、開くのか……。"
-        },
-        {
-          "label": "resi_choice_speed",
-          "speaker": "助手",
-          "text": "あ、速くすると、足音も速くなります。でも、一定以上は速くならない……。"
-        },
-        {
-          "label": "resi_choice_hide",
-          "speaker": "調査員",
-          "text": "角を曲がった先で、一度姿を消す。足音だけがどう動くか、見ておきたい。"
-        },
-        {
-          "label": "resi_choice_hide",
-          "speaker": "助手",
-          "text": "……誰もいません。でも、さっきと同じタイミングで“コツ、コツ”って。"
-        },
-        {
-          "speaker": "助手",
-          "text": "これ、やっぱり“誰か”がついてきてるってことですよね。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "足音の数は？ 一人分か、複数か。"
-        },
-        {
-          "speaker": "助手",
-          "text": "えっと……たぶん、一人分。小学生くらいの、軽い感じの音です。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "夜の住宅街で、子どもの足音だけが残っている……。",
-          "choices": [
-            {
-              "text": "事故や事件で亡くなった子どもの残滓だと考える",
-              "gotoLabel": "resi_hypo_accident"
-            },
-            {
-              "text": "学校や塾帰りの“癖”が怪異化したと考える",
-              "gotoLabel": "resi_hypo_habit"
-            },
-            {
-              "text": "この区画そのものが“通学路の記憶”として残っていると考える",
-              "gotoLabel": "resi_hypo_route"
-            }
-          ]
-        },
-        {
-          "label": "resi_hypo_accident",
-          "speaker": "助手",
-          "text": "やっぱり……事故か事件で帰れなくなった子が、そのまま足音だけになっているパターンですかね。"
-        },
-        {
-          "label": "resi_hypo_accident",
-          "speaker": "調査員",
-          "text": "ありがちな筋ではあるが、その場合は“目撃証言”も多くなる。今のところ、妙に『音だけ』に偏っている。"
-        },
-        {
-          "label": "resi_hypo_habit",
-          "speaker": "助手",
-          "text": "毎日この時間に帰ってきていた子がいて……その習慣だけが残ってる、とか？"
-        },
-        {
-          "label": "resi_hypo_habit",
-          "speaker": "調査員",
-          "text": "習慣の残滓が怪異になることはある。だが、その場合は“日付”や“天候”にもう少し強く縛られる。"
-        },
-        {
-          "label": "resi_hypo_route",
-          "speaker": "助手",
-          "text": "この辺り一帯が『通学路』のまま固定されちゃってるイメージでしょうか。"
-        },
-        {
-          "label": "resi_hypo_route",
-          "speaker": "調査員",
-          "text": "そうだな。だからこそ、“誰か”ではなく“足音”だけが残る。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "どの仮説にせよ、“子ども”の気配は濃い。"
-        },
-        {
-          "system": "unlockEvidence",
-          "text": "【新規情報】小さな靴が並べられている写真／住民の証言メモを入手した。"
-        },
-        {
-          "speaker": "助手",
-          "text": "靴は全部、子供サイズですね。古いものと新しいものが混ざってます。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "この現象を、どう処理すべきか……。",
-          "choices": [
-            {
-              "text": "この場で封印準備を進める",
-              "gotoLabel": "resi_policy_seal",
-              "effects": [
+            "once": true,
+            "lines": [
                 {
-                  "type": "addFlag",
-                  "key": "chief_affection",
-                  "delta": 1
-                }
-              ]
-            },
-            {
-              "text": "しばらく経過観察し、記録を集める",
-              "gotoLabel": "resi_policy_watch"
-            },
-            {
-              "text": "住民への聞き取りを増やし、“背景”から探る",
-              "gotoLabel": "resi_policy_hear"
-            }
-          ]
-        },
-        {
-          "label": "resi_policy_seal",
-          "speaker": "調査員",
-          "text": "子ども相手でも、危険なら封じるしかない。歯切れの悪い同情は、かえって全員を傷つける。"
-        },
-        {
-          "label": "resi_policy_watch",
-          "speaker": "調査員",
-          "text": "今すぐ封印するには、まだ情報が足りない。軽率に動けば、別の場所で歪んで噴き出す。"
-        },
-        {
-          "label": "resi_policy_hear",
-          "speaker": "調査員",
-          "text": "この街の“積もった声”を知らないと、ただの現象として処理することしかできない。"
-        },
-        {
-          "speaker": "助手",
-          "text": "いずれにしても、正体を一度は特定しないと、報告書が出せませんね。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "……ああ。怪異の輪郭を固めるぞ。"
-        },
-        {
-          "goto": "investigation"
-        }
-      ],
-      "identifyBlanks": [
-        {
-          "label": "怪異の発生場所",
-          "choices": [
-            "住宅街の細い路地",
-            "人通りの多い駅前",
-            "海沿いの防波堤"
-          ],
-          "correctIndex": 0
-        },
-        {
-          "label": "主体のイメージ",
-          "choices": [
-            "帰宅途中の子どもの足音",
-            "電車に乗り遅れた会社員の影",
-            "波にさらわれた灯台守のため息"
-          ],
-          "correctIndex": 0
-        },
-        {
-          "label": "怪異の性質",
-          "choices": [
-            "特定の時間帯にだけ“足音がついてくる”",
-            "名前を呼ぶ声がホームに残る",
-            "満潮のたびに姿を変える"
-          ],
-          "correctIndex": 0
-        }
-      ],
-      "menu": {
-        "evidenceBase": "現地で集めた証拠と証言は、以下のように整理できる。",
-        "memo": "・夜の住宅街の路地で、子どもの足音だけがついてくる。\n・足音は一人分で、小柄な子どもの歩幅に近い。\n・通報はあるが、“姿を見た”という証言はほとんどない。"
-      },
-      "investigation": {
-        "requiredCount": 2,
-        "hotspots": [
-          {
-            "id": "resi_footsteps_alley",
-            "label": "路地奥の薄暗い舗道",
-            "description": "街灯が届かない路地の奥、足音の反響が不自然に強く残っている。",
-            "x": 60,
-            "y": 55,
-            "w": 18,
-            "h": 25
-          },
-          {
-            "id": "resi_child_shoes",
-            "label": "並べられた子ども靴",
-            "description": "家の塀のそばに、小さな靴がいくつも並べられている。古い泥がこびりついたままだ。",
-            "x": 20,
-            "y": 60,
-            "w": 18,
-            "h": 22
-          }
-        ]
-      }
-    },
-    {
-      "id": "station_evening",
-      "type": "kaiji",
-      "background": "assets/bg/bg_station_evening.jpg",
-      "locationType": "STATION",
-      "timeWindow": {
-        "startHour": 16,
-        "endHour": 24
-      },
-      "once": true,
-      "lines": [
-        {
-          "speaker": "助手",
-          "text": "夕方の駅前、今日も人が多いですね。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "人の流れが複雑な場所ほど、“溜まり”は生まれやすい。"
-        },
-        {
-          "speaker": "助手",
-          "text": "通報内容は……『誰かに名前を呼ばれた気がして振り向くと、人混みの中に“自分そっくりの背中”が見える』でしたっけ。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "“名前を呼ばれる”というのは、怪異ではよくある導線だな。"
-        },
-        {
-          "speaker": "助手",
-          "text": "でも、自分の背中を見たっていうのは、ちょっと珍しいパターンですね。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "鏡像型か、写し取り型か……あるいは“線路”に結びついた何かか。",
-          "choices": [
-            {
-              "text": "鏡のように“もう一人の自分”を映す怪異だと考える",
-              "gotoLabel": "st_hypo_mirror"
-            },
-            {
-              "text": "駅の人の流れをテンプレートとして、人影を量産していると考える",
-              "gotoLabel": "st_hypo_flow"
-            },
-            {
-              "text": "ホームや線路に残った“誰かの最期”が形を変えていると考える",
-              "gotoLabel": "st_hypo_last"
-            }
-          ]
-        },
-        {
-          "label": "st_hypo_mirror",
-          "speaker": "助手",
-          "text": "“もう一人の自分”って聞くと、どうしても鏡のイメージになりますね。"
-        },
-        {
-          "label": "st_hypo_mirror",
-          "speaker": "調査員",
-          "text": "ただ、鏡像型ならもっと露骨に『こちらを見ている』はずだ。背中だけというのが気になる。"
-        },
-        {
-          "label": "st_hypo_flow",
-          "speaker": "助手",
-          "text": "ラッシュの時間帯の人の動きが、そのまま“型”として残ってる感じでしょうか。"
-        },
-        {
-          "label": "st_hypo_flow",
-          "speaker": "調査員",
-          "text": "そうだな。テンプレート化した“通勤者”の影が、たまたま“通報者本人そっくり”に見えた可能性もある。"
-        },
-        {
-          "label": "st_hypo_last",
-          "speaker": "助手",
-          "text": "ホームから落ちた人の最期の姿……が、誰かの背中として見えている、とか。"
-        },
-        {
-          "label": "st_hypo_last",
-          "speaker": "調査員",
-          "text": "最期の一歩が、そのまま人の流れに紛れ込んでいる……という線だな。"
-        },
-        {
-          "speaker": "助手",
-          "text": "それにしても、通報者はみんな『自分の名前を呼ばれた気がした』って言ってました。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "“気がした”というのがポイントだ。はっきり聞こえたとは言っていない。"
-        },
-        {
-          "speaker": "助手",
-          "text": "ホームのアナウンスや電車のブレーキ音に紛れて、脳がそう解釈しちゃった……みたいな。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "あるいは、“名前を呼ばれた”と認識させることそのものが、この怪異の入口かもしれない。",
-          "choices": [
-            {
-              "text": "『名前を呼ばれた』と認識した人だけが、影を見ると考える",
-              "gotoLabel": "st_hypo_gate"
-            },
-            {
-              "text": "そもそも“名前”ではなく、“足音や呼気”がトリガーだと考える",
-              "gotoLabel": "st_hypo_sound"
-            }
-          ]
-        },
-        {
-          "label": "st_hypo_gate",
-          "speaker": "助手",
-          "text": "入口が“認識”ってことは、かなり精神寄りの怪異ですね。"
-        },
-        {
-          "label": "st_hypo_gate",
-          "speaker": "調査員",
-          "text": "その場合、実害が出る前に切っておく必要がある。"
-        },
-        {
-          "label": "st_hypo_sound",
-          "speaker": "助手",
-          "text": "音の方が本体で、『名前』はただの上書きってパターンもありえますね。"
-        },
-        {
-          "label": "st_hypo_sound",
-          "speaker": "調査員",
-          "text": "いずれにせよ、“ホームの端”と“人の流れ”に紐づいているのは間違いない。"
-        },
-        {
-          "system": "unlockEvidence",
-          "text": "【新規情報】監視カメラの静止画／ホーム端の映像ログを入手した。"
-        },
-        {
-          "speaker": "助手",
-          "text": "監視カメラの静止画、これですね。ホーム端に“余計な影”が写っているコマ。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "人の流れから、わずかに浮いている。線路に近すぎるし、身体の向きも不自然だ。"
-        },
-        {
-          "speaker": "助手",
-          "text": "この怪異をどう扱うか、方針を決めておきませんか？",
-          "choices": [
-            {
-              "text": "実害のリスクを重く見て、即時封印方針にする",
-              "gotoLabel": "st_policy_high",
-              "effects": [
+                    "speaker": "助手",
+                    "text": "住宅街の怪異反応……ここですね。静かだけど、妙に耳がざわつきます。"
+                },
                 {
-                  "type": "addFlag",
-                  "key": "chief_affection",
-                  "delta": 1
-                }
-              ]
-            },
-            {
-              "text": "しばらく傾向を観察し、“いつ誰が狙われるか”を精査する",
-              "gotoLabel": "st_policy_mid"
-            },
-            {
-              "text": "人間側の導線を変える（アナウンスやポスター）方向も併用する",
-              "gotoLabel": "st_policy_soft"
-            }
-          ]
-        },
-        {
-          "label": "st_policy_high",
-          "speaker": "調査員",
-          "text": "ここで事故が起きれば、“怪談”では済まない。実害が出る前に封じる。"
-        },
-        {
-          "label": "st_policy_mid",
-          "speaker": "調査員",
-          "text": "性質がまだ掴めない。いきなり封印するより、振る舞いのパターンをもう少し洗いたい。"
-        },
-        {
-          "label": "st_policy_soft",
-          "speaker": "調査員",
-          "text": "人間側の行動を変えるだけで“届かなくなる”怪異もいる。封印だけが正解とは限らない。"
-        },
-        {
-          "speaker": "助手",
-          "text": "……それでも、正体は一度きちんと特定したほうがよさそうですね。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "ああ。影の輪郭を固めるか。"
-        },
-        {
-          "goto": "investigation"
-        }
-      ],
-      "identifyBlanks": [
-        {
-          "label": "怪異の主な舞台",
-          "choices": [
-            "住宅街の細い路地",
-            "人の流れが絶えない駅ホーム",
-            "誰もいない海沿いの防波堤"
-          ],
-          "correctIndex": 1
-        },
-        {
-          "label": "入口となる現象",
-          "choices": [
-            "誰かに名前を呼ばれた“気がする”",
-            "突然、視界が真っ暗になる",
-            "潮の満ち引きが逆転する"
-          ],
-          "correctIndex": 0
-        },
-        {
-          "label": "視認される形",
-          "choices": [
-            "自分そっくりの背中の影",
-            "顔のない子どもの群れ",
-            "水面に浮かぶ無数の手"
-          ],
-          "correctIndex": 0
-        }
-      ],
-      "menu": {
-        "evidenceBase": "駅構内で集めたログと映像を整理すると、以下の点が浮かび上がる。",
-        "memo": "・「名前を呼ばれた気がした」と証言する通報者が多いが、誰も声の主を特定できていない。\n・監視カメラには、線路寄りに不自然な影が写り込んでいるコマがある。\n・影は“通報者本人に似た後ろ姿”として記憶されている。"
-      },
-      "investigation": {
-        "requiredCount": 2,
-        "hotspots": [
-          {
-            "id": "st_shadow_home_edge",
-            "label": "ホーム端の不自然な影",
-            "description": "線路ぎりぎりの位置に、人の流れとは向きの違う黒い影が貼りついている。",
-            "x": 70,
-            "y": 45,
-            "w": 18,
-            "h": 22
-          },
-          {
-            "id": "st_warning_line",
-            "label": "黄色い点字ブロック",
-            "description": "足元の点字ブロックの上だけ、わずかに濡れたような足跡が点々と続いている。",
-            "x": 25,
-            "y": 70,
-            "w": 30,
-            "h": 18
-          }
-        ]
-      }
-    },
-    {
-      "id": "chief_night_talk",
-      "type": "dialog-only",
-      "background": "assets/bg/bg_office.jpg",
-      "timeWindow": {
-        "startHour": 22,
-        "endHour": 3
-      },
-      "locationType": null,
-      "once": false,
-      "lines": [
-        {
-          "speaker": "所長",
-          "text": "おかえり。……顔を見れば、だいたい現場の空気は分かる。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "今日は、住宅街と駅前を回ってきました。"
-        },
-        {
-          "speaker": "所長",
-          "text": "ふむ。どちらも“日常の中に紛れ込む”タイプだな。派手さはないが、放っておくと根を張る。"
-        },
-        {
-          "speaker": "助手",
-          "text": "子どもの足音と、自分そっくりの背中の影……正直、どっちも夢に見そうです。"
-        },
-        {
-          "speaker": "所長",
-          "text": "夢で済めば安い。問題は、“目が覚めても続いている方”だ。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "所長は、今回の案件をどう見ます？",
-          "choices": [
-            {
-              "text": "どちらも早期封じ込みが必要だと考える",
-              "gotoLabel": "chief_op_strict",
-              "effects": [
+                    "system": "showKaiji",
+                    "kaijiKey": "drowned_spirit",
+                    "text": "波間から、ずぶ濡れの影が一瞬だけ浮かび上がった。"
+                },
                 {
-                  "type": "addFlag",
-                  "key": "chief_affection",
-                  "delta": 1
+                    "speaker": "調査員",
+                    "text": "家の明かりはまばらだな。人はいるのに、“人気”が薄い。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "先日の通報は……『誰もいないはずの路地から、足音だけがついてくる』でしたっけ。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "まずは、どこから見るかだな。",
+                    "choices": [
+                        {
+                            "text": "細い路地に入る",
+                            "gotoLabel": "resi_route_alley"
+                        },
+                        {
+                            "text": "大通り沿いを歩く",
+                            "gotoLabel": "resi_route_main"
+                        },
+                        {
+                            "text": "公園の周りから様子を見る",
+                            "gotoLabel": "resi_route_park"
+                        }
+                    ]
+                },
+                {
+                    "label": "resi_route_alley",
+                    "speaker": "助手",
+                    "text": "路地、やっぱり暗いですね……足音が反響しやすそうです。"
+                },
+                {
+                    "label": "resi_route_alley",
+                    "speaker": "調査員",
+                    "text": "こういう場所は、音の“気配”が形になりやすい。怪異には居心地がいいはずだ。"
+                },
+                {
+                    "label": "resi_route_main",
+                    "speaker": "助手",
+                    "text": "大通りは車の音が多くて、足音はかき消されそうです。"
+                },
+                {
+                    "label": "resi_route_main",
+                    "speaker": "調査員",
+                    "text": "それでも通報はあった。となると、よほど耳につく足音だったんだろうな。"
+                },
+                {
+                    "label": "resi_route_park",
+                    "speaker": "助手",
+                    "text": "公園の横を抜けると、急に静かになりますね。さっきまで車の音がしていたのに。"
+                },
+                {
+                    "label": "resi_route_park",
+                    "speaker": "調査員",
+                    "text": "静けさ自体が“異常”ということもある。怪異は音を奪う場合もあるからな。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "……あ、今、聞こえました？ 小さい足音。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "聞こえた。距離は……数メートル後ろか。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "どうします？",
+                    "choices": [
+                        {
+                            "text": "あえて立ち止まって、追いつかせる",
+                            "gotoLabel": "resi_choice_wait"
+                        },
+                        {
+                            "text": "歩く速度を変えて、距離を測る",
+                            "gotoLabel": "resi_choice_speed"
+                        },
+                        {
+                            "text": "路地の角に隠れて、姿を確認する",
+                            "gotoLabel": "resi_choice_hide"
+                        }
+                    ]
+                },
+                {
+                    "label": "resi_choice_wait",
+                    "speaker": "調査員",
+                    "text": "ここで止まる。足音がどう変化するか、よく聞け。"
+                },
+                {
+                    "label": "resi_choice_wait",
+                    "speaker": "助手",
+                    "text": "……足音も止まりました。やっぱり“ついてきている”みたいです。"
+                },
+                {
+                    "label": "resi_choice_speed",
+                    "speaker": "調査員",
+                    "text": "少し速く歩く。差が縮むのか、開くのか……。"
+                },
+                {
+                    "label": "resi_choice_speed",
+                    "speaker": "助手",
+                    "text": "早歩きしても、距離はあまり変わらないですね。一定の距離を保っている感じです。"
+                },
+                {
+                    "label": "resi_choice_hide",
+                    "speaker": "調査員",
+                    "text": "角で身を隠す。足音のほうから“顔を出させる”。"
+                },
+                {
+                    "label": "resi_choice_hide",
+                    "speaker": "助手",
+                    "text": "……あれ？ 足音だけが、曲がらずにまっすぐ通り過ぎました。姿は見えません。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "いずれにせよ、“人ではない”足音だな。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "通報者のメモによると、『二階の窓から見ていたら、誰もいないのに足音だけが往復していた』ともあります。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "この現象、どう解釈する？",
+                    "choices": [
+                        {
+                            "text": "遊び足りない子どもの霊が、追いかけっこを続けている",
+                            "gotoLabel": "resi_hypo_child"
+                        },
+                        {
+                            "text": "事故の“逃げようとした足取り”だけが再生されている",
+                            "gotoLabel": "resi_hypo_residual"
+                        },
+                        {
+                            "text": "住民のストレスが、音の形で蓄積している",
+                            "gotoLabel": "resi_hypo_stress"
+                        }
+                    ]
+                },
+                {
+                    "label": "resi_hypo_child",
+                    "speaker": "調査員",
+                    "text": "“追いかけっこ”が終わっていないんだろう。誰かがふり向いてくれるまで、走り続けている。"
+                },
+                {
+                    "label": "resi_hypo_child",
+                    "speaker": "助手",
+                    "text": "だから、一定の距離を保ちながらついてくるんですね……。"
+                },
+                {
+                    "label": "resi_hypo_residual",
+                    "speaker": "調査員",
+                    "text": "事故の瞬間、『逃げようとした足音』だけがここに縫いとめられているのかもしれない。"
+                },
+                {
+                    "label": "resi_hypo_residual",
+                    "speaker": "助手",
+                    "text": "逃げ切れなかった“続き”を、今でも繰り返している……。"
+                },
+                {
+                    "label": "resi_hypo_stress",
+                    "speaker": "調査員",
+                    "text": "この密集した住宅街なら、日常的なストレスも多いだろう。足音は、“誰かの気配を感じていたい”という逆の欲求かもしれない。"
+                },
+                {
+                    "label": "resi_hypo_stress",
+                    "speaker": "助手",
+                    "text": "なるほど……ひとりでいたくないから、“足音だけでも”隣にいてほしい、みたいな。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "どの仮説にせよ、“子ども”の気配は濃い。"
+                },
+                {
+                    "system": "unlockEvidence",
+                    "text": "【新規情報】小さな靴が並べられている写真／住民の証言メモを入手した。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "靴は全部、子供サイズですね。古いものと新しいものが混ざってます。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "この現象を、どう処理すべきか……。",
+                    "choices": [
+                        {
+                            "text": "危険度高め。早めに封印対象として扱う",
+                            "gotoLabel": "resi_policy_seal"
+                        },
+                        {
+                            "text": "様子見。情報を集めてから慎重に扱う",
+                            "gotoLabel": "resi_policy_watch"
+                        },
+                        {
+                            "text": "住民への聞き取りを増やし、“背景”から探る",
+                            "gotoLabel": "resi_policy_hear"
+                        }
+                    ]
+                },
+                {
+                    "label": "resi_policy_seal",
+                    "speaker": "調査員",
+                    "text": "子ども相手でも、危険なら封じるしかない。歯切れの悪い同情は、かえって全員を傷つける。"
+                },
+                {
+                    "label": "resi_policy_watch",
+                    "speaker": "調査員",
+                    "text": "今すぐ封印するには、まだ情報が足りない。軽率に動けば、別の場所で歪んで噴き出す。"
+                },
+                {
+                    "label": "resi_policy_hear",
+                    "speaker": "調査員",
+                    "text": "この街の“積もった声”を知らないと、ただの現象として処理することしかできない。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "いずれにしても、正体を一度は特定しないと、報告書が出せませんね。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "……ああ。怪異の輪郭を固めるぞ。"
+                },
+                {
+                    "goto": "identify"
                 }
-              ]
-            },
-            {
-              "text": "街の“物語”として、ある程度共存も視野に入れる",
-              "gotoLabel": "chief_op_soft"
+            ],
+            "identifyBlanks": [
+                {
+                    "label": "怪異の正体に近いもの",
+                    "choices": [
+                        "遊び足りない子供の霊",
+                        "通りすがりの旅人",
+                        "住宅街の地形のせい"
+                    ],
+                    "correctIndex": 0
+                },
+                {
+                    "label": "主な現象",
+                    "choices": [
+                        "窓ガラスが割れる",
+                        "背後から足音が追ってくる",
+                        "電柱が揺れる"
+                    ],
+                    "correctIndex": 1
+                },
+                {
+                    "label": "出やすい時間帯",
+                    "choices": [
+                        "昼間",
+                        "夕方〜深夜",
+                        "早朝のみ"
+                    ],
+                    "correctIndex": 1
+                },
+                {
+                    "label": "関連する手がかり",
+                    "choices": [
+                        "子どもの靴の並んだ写真",
+                        "ひび割れたアスファルト",
+                        "電線の切れた音"
+                    ],
+                    "correctIndex": 0
+                }
+            ],
+            "menu": {
+                "evidence": "<p>【住宅街の怪異：証拠品】</p><ul><li>小さな靴が複数並べられていた写真。</li><li>住民メモ：「角を曲がるたびに足音の位置が少し近づいている気がする」。</li></ul>",
+                "memo": "<p>【住宅街の怪異：特徴メモ】</p><ul><li>姿は見えないが、子どもの足音のように聞こえる。</li><li>夜間の住宅街の細い路地で発生しやすい。</li><li>一定の距離を保ちながら、背後から追ってくる。</li></ul>"
             }
-          ]
         },
         {
-          "label": "chief_op_strict",
-          "speaker": "所長",
-          "text": "……お前の判断は妥当だ。“危険の芽”は、小さいうちに摘んでおくに越したことはない。"
+            "id": "station_evening",
+            "type": "kaiji",
+            "background": "assets/bg/bg_station_evening.jpg",
+            "locationType": "STATION",
+            "timeWindow": {
+                "startHour": 17,
+                "endHour": 24
+            },
+            "once": true,
+            "lines": [
+                {
+                    "speaker": "調査員",
+                    "text": "駅前か……人が多い場所ほど、妙なものも紛れ込みやすい。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "終電間際に、『肩を叩かれたのに誰もいなかった』という報告が複数来ています。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "肩を叩く……線路側に向かせるには十分なきっかけだ。方向を誤れば、そのまま転落だな。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "まずはどこを重点的に見ます？",
+                    "choices": [
+                        {
+                            "text": "ホーム端の線路際",
+                            "gotoLabel": "st_focus_edge"
+                        },
+                        {
+                            "text": "階段・エスカレーター付近",
+                            "gotoLabel": "st_focus_stairs"
+                        },
+                        {
+                            "text": "監視カメラの死角",
+                            "gotoLabel": "st_focus_blind"
+                        }
+                    ]
+                },
+                {
+                    "label": "st_focus_edge",
+                    "speaker": "調査員",
+                    "text": "一番危ないのは、線路際だ。そこから見ていく。"
+                },
+                {
+                    "label": "st_focus_edge",
+                    "speaker": "助手",
+                    "text": "黄色い点字ブロックの上、なんとなく冷たい感じがします。"
+                },
+                {
+                    "label": "st_focus_stairs",
+                    "speaker": "調査員",
+                    "text": "人の流れが集中する場所は、異常に気づきにくい。階段周辺も侮れない。"
+                },
+                {
+                    "label": "st_focus_stairs",
+                    "speaker": "助手",
+                    "text": "確かに、押されたりしたら一瞬で危険ですね……。"
+                },
+                {
+                    "label": "st_focus_blind",
+                    "speaker": "調査員",
+                    "text": "監視カメラに映らない場所は、怪異にとっても都合がいい。"
+                },
+                {
+                    "label": "st_focus_blind",
+                    "speaker": "助手",
+                    "text": "映像に残らない分、証拠も残りにくいですしね。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "駅員さんへの聞き取りもできますが、何を中心に聞きます？",
+                    "choices": [
+                        {
+                            "text": "被害が起きた時間帯",
+                            "gotoLabel": "st_q_time"
+                        },
+                        {
+                            "text": "被害者の共通点",
+                            "gotoLabel": "st_q_victim"
+                        },
+                        {
+                            "text": "駅員自身が“嫌だ”と感じる場所",
+                            "gotoLabel": "st_q_spot"
+                        }
+                    ]
+                },
+                {
+                    "label": "st_q_time",
+                    "speaker": "助手",
+                    "text": "終電の一本前から終電まで、が多いみたいです。"
+                },
+                {
+                    "label": "st_q_time",
+                    "speaker": "調査員",
+                    "text": "日付が変わる前後、“帰る場所”を意識する時間帯だな。"
+                },
+                {
+                    "label": "st_q_victim",
+                    "speaker": "助手",
+                    "text": "一人で帰る乗客ばかり、とのことです。酔っている人が多い時間帯でもあります。"
+                },
+                {
+                    "label": "st_q_victim",
+                    "speaker": "調査員",
+                    "text": "視界も足元もおぼつかない相手を選んでいる……とも解釈できるな。"
+                },
+                {
+                    "label": "st_q_spot",
+                    "speaker": "助手",
+                    "text": "『ホーム端の、決まった柱の近くがなんとなく嫌な感じがする』と駅員さんは言っていました。"
+                },
+                {
+                    "label": "st_q_spot",
+                    "speaker": "調査員",
+                    "text": "柱は、人の視線をさえぎる“盾”にも“壁”にもなる。そこに立つ影は、見落とされやすい。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "……今、誰かに見られている気がしませんか？"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "視線ではないな。背中の“重さ”だ。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "この怪異、何を狙っていると思う？",
+                    "choices": [
+                        {
+                            "text": "線路に落とすために、あえて肩を叩いている",
+                            "gotoLabel": "st_hypo_push"
+                        },
+                        {
+                            "text": "ただ気づいてほしいだけの、弱いアピール",
+                            "gotoLabel": "st_hypo_notice"
+                        },
+                        {
+                            "text": "生前の“呼び止める癖”だけが残っている",
+                            "gotoLabel": "st_hypo_habit"
+                        }
+                    ]
+                },
+                {
+                    "label": "st_hypo_push",
+                    "speaker": "調査員",
+                    "text": "視線をずらし、足元への注意をそらせる。その一瞬で足を滑らせれば、それで十分だ。"
+                },
+                {
+                    "label": "st_hypo_push",
+                    "speaker": "助手",
+                    "text": "意図的に“落とそうとしている”としたら、かなり悪質なタイプですね……。"
+                },
+                {
+                    "label": "st_hypo_notice",
+                    "speaker": "調査員",
+                    "text": "本当に気づいてほしいだけなら、無視され続けるほど行動がエスカレートする。今はまだ序章の可能性もある。"
+                },
+                {
+                    "label": "st_hypo_notice",
+                    "speaker": "助手",
+                    "text": "これ以上放置すると、押されたり引きずり込まれたりする可能性も……。"
+                },
+                {
+                    "label": "st_hypo_habit",
+                    "speaker": "調査員",
+                    "text": "『すみません』と肩を叩いて呼び止める癖がある人間だったのかもしれない。その行動だけが残っている線もある。"
+                },
+                {
+                    "label": "st_hypo_habit",
+                    "speaker": "助手",
+                    "text": "呼び止める相手は、もういないのに……。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "監視カメラの静止画、これですね。ホーム端に“余計な影”が写っているコマ。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "人の流れから、わずかに浮いている。線路に近すぎるし、身体の向きも不自然だ。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "この怪異をどう扱うか、方針を決めておきませんか？",
+                    "choices": [
+                        {
+                            "text": "転落事故を防ぐため、最優先で封印対象とする",
+                            "gotoLabel": "st_policy_high"
+                        },
+                        {
+                            "text": "被害状況を整理しつつ、限定的に監視を続ける",
+                            "gotoLabel": "st_policy_mid"
+                        },
+                        {
+                            "text": "人間側の導線を変える（アナウンスやポスター）方向も併用する",
+                            "gotoLabel": "st_policy_soft"
+                        }
+                    ]
+                },
+                {
+                    "label": "st_policy_high",
+                    "speaker": "調査員",
+                    "text": "ここで事故が起きれば、“怪談”では済まない。実害が出る前に封じる。"
+                },
+                {
+                    "label": "st_policy_mid",
+                    "speaker": "調査員",
+                    "text": "性質がまだ掴めない。いきなり封印するより、振る舞いのパターンをもう少し洗いたい。"
+                },
+                {
+                    "label": "st_policy_soft",
+                    "speaker": "調査員",
+                    "text": "人間側の行動を変えるだけで“届かなくなる”怪異もいる。封印だけが正解とは限らない。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "……それでも、正体は一度きちんと特定したほうがよさそうですね。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "ああ。影の輪郭を固めるか。"
+                },
+                {
+                    "goto": "identify"
+                }
+            ],
+            "identifyBlanks": [
+                {
+                    "label": "狙われやすい相手",
+                    "choices": [
+                        "朝の通勤客",
+                        "終電間際の一人客",
+                        "修学旅行生の集団"
+                    ],
+                    "correctIndex": 1
+                },
+                {
+                    "label": "現象が起きる場所",
+                    "choices": [
+                        "ホーム中央",
+                        "階段付近",
+                        "ホーム端の線路ぎりぎり"
+                    ],
+                    "correctIndex": 2
+                },
+                {
+                    "label": "最初の異変",
+                    "choices": [
+                        "肩を叩かれる感覚",
+                        "急に寒くなる",
+                        "アナウンスが乱れる"
+                    ],
+                    "correctIndex": 0
+                },
+                {
+                    "label": "手掛かりとして重要なもの",
+                    "choices": [
+                        "監視カメラの影",
+                        "自販機の売り切れ表示",
+                        "落し物の傘"
+                    ],
+                    "correctIndex": 0
+                }
+            ],
+            "menu": {
+                "evidence": "<p>【駅の怪異：証拠品】</p><ul><li>監視カメラ静止画：ホーム端に、乗客とは明らかに違う“影”が一瞬だけ写っている。</li><li>駅員の証言メモ：「肩を叩かれたと思って振り返ったが、誰もいなかった」。</li></ul>",
+                "memo": "<p>【駅の怪異：特徴メモ】</p><ul><li>終電間際の一人客に接触しやすい。</li><li>ホーム端の決まった柱の周辺に現れることが多い。</li><li>最初の異変は、肩を軽く叩かれたような感覚。</li></ul>"
+            }
         },
         {
-          "label": "chief_op_strict",
-          "speaker": "所長",
-          "text": "その代わり、報告書には“人間側のケア”も必ず入れておけ。怪異だけを切り離せば済む話じゃない。"
-        },
-        {
-          "label": "chief_op_soft",
-          "speaker": "所長",
-          "text": "共存、か。口で言うほど簡単ではないが……まったくの間違いでもない。"
-        },
-        {
-          "label": "chief_op_soft",
-          "speaker": "所長",
-          "text": "怪異を全部消した世界は、きっと別の形で歪む。問題は、“どこまで許容するか”のライン引きだ。"
-        },
-        {
-          "speaker": "助手",
-          "text": "ライン引き……難しいですね。"
-        },
-        {
-          "speaker": "所長",
-          "text": "だからこそ、お前たちの現場感覚が要る。机上の安全基準だけでは測れん。"
-        },
-        {
-          "speaker": "調査員",
-          "text": "……了解しました。次の現場でも、ちゃんと“輪郭”を見極めます。"
-        },
-        {
-          "speaker": "所長",
-          "text": "ああ。今日はひとまず上がれ。続きは、また明日の街でだ。"
-        },
-        {
-          "goto": "end"
+            "id": "chief_night_talk",
+            "type": "dialog-only",
+            "background": "assets/bg/bg_office.jpg",
+            "timeWindow": {
+                "startHour": 22,
+                "endHour": 3
+            },
+            "locationType": null,
+            "once": true,
+            "lines": [
+                {
+                    "speaker": "所長",
+                    "text": "……こんな時間まで現場を回っていたのか。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "街の“ざわめき”が収まる気がしなくて。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "そういう夜は、多い。慣れる必要はないが、付き合い方は覚えろ。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "で、お前から見て……この都市の怪異は、どんな“顔”をしている？",
+                    "choices": [
+                        {
+                            "text": "人に似てきている気がする",
+                            "gotoLabel": "chief_ans_human",
+                            "effects": [
+                                {
+                                    "type": "addFlag",
+                                    "key": "chief_affection",
+                                    "delta": 3
+                                },
+                                {
+                                    "type": "setFlag",
+                                    "key": "route",
+                                    "value": "chief"
+                                }
+                            ]
+                        },
+                        {
+                            "text": "むしろ、だんだん“遠く”なっている気がする",
+                            "gotoLabel": "chief_ans_far",
+                            "effects": [
+                                {
+                                    "type": "addFlag",
+                                    "key": "chief_affection",
+                                    "delta": 2
+                                },
+                                {
+                                    "type": "setFlag",
+                                    "key": "route",
+                                    "value": "chief"
+                                }
+                            ]
+                        },
+                        {
+                            "text": "まだ、よく分からない",
+                            "gotoLabel": "chief_ans_unknown",
+                            "effects": [
+                                {
+                                    "type": "addFlag",
+                                    "key": "chief_affection",
+                                    "delta": 1
+                                },
+                                {
+                                    "type": "setFlag",
+                                    "key": "route",
+                                    "value": "chief"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "chief_ans_human",
+                    "speaker": "調査員",
+                    "text": "人の感情や習慣に、どこか寄り添っているように感じます。"
+                },
+                {
+                    "label": "chief_ans_human",
+                    "speaker": "所長",
+                    "text": "人の形に寄る怪異は増えている。人間のほうが、怪異に“寄りかかっている”せいかもしれん。"
+                },
+                {
+                    "label": "chief_ans_far",
+                    "speaker": "調査員",
+                    "text": "手触りが薄くなったというか……昔話に出てくるような“分かりやすい怪異”とは違う感じです。"
+                },
+                {
+                    "label": "chief_ans_far",
+                    "speaker": "所長",
+                    "text": "都市は何でも“ノイズ”でごまかせる。怪異の側も、わざわざ濃い姿を取る必要がなくなった。"
+                },
+                {
+                    "label": "chief_ans_unknown",
+                    "speaker": "調査員",
+                    "text": "正直、まだ輪郭がつかめません。現象がバラバラすぎて。"
+                },
+                {
+                    "label": "chief_ans_unknown",
+                    "speaker": "所長",
+                    "text": "分からないと言えるうちはまだいい。分かったつもりになるほうが危ない。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "……ひとつだけ覚えておけ。怪異は“異常”じゃない。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "異常じゃ、ない？"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "人間の暮らしのほうが、先に“異常”になった。その歪みが、ああいう形で出ているだけだ。"
+                },
+                {
+                    "speaker": "助手",
+                    "text": "所長、たまにそういうことをさらっと言うから怖いです。"
+                },
+                {
+                    "speaker": "所長",
+                    "text": "怖がる暇があるなら、寝ろ。明日も街はざわめく。"
+                },
+                {
+                    "speaker": "調査員",
+                    "text": "……了解です。おやすみなさい、所長。"
+                },
+                {
+                    "goto": "end"
+                }
+            ],
+            "identifyBlanks": [],
+            "menu": {}
         }
-      ],
-      "identifyBlanks": [],
-      "menu": {
-        "memo": "所長との夜間のやり取りは、今後の方針や評価に影響を与えることがある。"
-      }
-    }
-  ]
+    ]
 }

@@ -1,225 +1,217 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>怪異調査センター</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <title>怪異調査センター - プロトタイプ</title>
 
-  <!-- Leaflet -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/characters.js"></script>
-<script src="js/game.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Leaflet (実マップ描画用) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
+
 <body>
-  <!-- ▼ PSP風ブート画面 -->
-  <div id="boot-screen">
-    <div class="boot-root" id="boot-root">
-      <div class="boot-centered sce-logo">
-        TONY COMPUTER
-        <span>ENTERTAINMENT</span>
-        <div class="sce-diamond"></div>
-      </div>
+    <!-- ▼ 起動画面（PSR風ブート） -->
+    <div id="boot-screen">
+        <div class="boot-root" id="boot-root">
 
-      <div class="boot-centered psp-logo">
-        <div class="psp-logo-main">PSR</div>
-        <div class="psp-logo-sub">Play Stories Revolution</div>
-        <div class="light-sweep"></div>
-      </div>
+            <div class="boot-centered sce-logo">
+                TOMY COMPUTER
+                <span>ENTERTAINMENT</span>
+                <div class="sce-diamond"></div>
+            </div>
 
-      <div class="wave">
-        <div class="wave-line"></div>
-        <div class="wave-line"></div>
-        <div class="wave-line"></div>
-      </div>
+            <div class="boot-centered psp-logo">
+                <div class="psp-logo-main">PSR</div>
+                <div class="psp-logo-sub">Play Stories Revolution</div>
+                <div class="light-sweep"></div>
+            </div>
+
+            <div class="wave">
+                <div class="wave-line"></div>
+                <div class="wave-line"></div>
+                <div class="wave-line"></div>
+            </div>
+
+        </div>
     </div>
-  </div>
-  <!-- ▲ PSP風ブート画面 -->
+    <!-- ▲ 起動画面 -->
 
-  <main id="game-root">
-    <div id="overlay-black" class="overlay-black hidden"></div>
+    <!-- 16:9 固定ゲームキャンバス -->
+    <div class="game-wrapper">
 
-    <!-- ▼ 0. タイトル／遊び方画面 -->
-    <section id="screen-intro" class="screen">
-      <div class="intro-inner">
-        <h1 class="intro-title">怪異調査センター</h1>
+        <!-- 黒フェードアウト -->
+        <div id="overlay-black" class="overlay-black hidden"></div>
 
-        <div class="intro-block">
-          <h2>このゲームについて</h2>
-          <p>
-            あなたは「怪異調査センター」の調査員として、<br />
-            現代の街に潜む怪異の噂を追い、正体を特定し、封印していきます。
-          </p>
+        <!-- 特定成功エフェクト -->
+        <div id="identify-overlay" class="identify-overlay hidden">
+            <div class="identify-text">特定</div>
         </div>
 
-        <div class="intro-block">
-          <h2>遊び方</h2>
-          <ul>
-            <li>位置情報（またはテスト用座標）を元に周辺マップが表示されます。</li>
-            <li>マップ上の怪異反応が見つかったら「調査を開始する」で現場へ。</li>
-            <li>会話パートで証言を集めたあと、調査フェーズで現場をクリックして証拠を集めます。</li>
-            <li>集めた証拠をもとに「怪異特定」パートでワードを選び、正体を特定します。</li>
-            <li>特定に成功すると封印フェーズに進み、長押しで封印します。</li>
-          </ul>
+        <!-- 特定失敗エフェクト -->
+        <div id="identify-fail-overlay" class="identify-fail-overlay hidden">
+            <div class="identify-fail-text">特定失敗</div>
         </div>
 
-        <div class="intro-block">
-          <h2>位置情報について</h2>
-          <p>
-            ブラウザから位置情報利用の確認ダイアログが表示されます。<br />
-            許可すると現在地付近の怪異シナリオが選ばれやすくなります。<br />
-            拒否した場合はテスト用の座標でゲームが進行します。
-          </p>
+        <!-- ▼ 0. タイトル／遊び方画面 -->
+        <section id="screen-intro" class="screen">
+            <div class="intro-inner">
+                <h1 class="intro-title">怪異調査センター</h1>
+
+                <div class="intro-block">
+                    <h2>このゲームについて</h2>
+                    <p>
+                        あなたは「怪異調査センター」の調査員として、<br>
+                        現代の街に潜む怪異の噂を追い、正体を特定し、封印していきます。
+                    </p>
+                </div>
+
+                <div class="intro-block">
+                    <h2>遊び方</h2>
+                    <ul>
+                        <li>位置情報（またはテスト用座標）を元に、周辺マップが表示されます。</li>
+                        <li>マップ上の怪異反応が見つかったら「調査を開始する」ボタンで現場へ。</li>
+                        <li>会話パートで証言や証拠を集め、「調査メニュー」から情報を確認します。</li>
+                        <li>最後に「怪異特定」パートでワードを選び、正体を特定します。</li>
+                        <li>特定に成功すると封印フェーズに進み、長押しで封印します。</li>
+                    </ul>
+                </div>
+
+                <div class="intro-block">
+                    <h2>位置情報について</h2>
+                    <p>
+                        ブラウザから位置情報利用の確認ダイアログが表示されます。<br>
+                        許可すると、現在地付近の怪異シナリオが選ばれやすくなります。<br>
+                        拒否した場合は、テスト用の座標でゲームが進行します。
+                    </p>
+                </div>
+
+                <button id="btn-start-game" class="main-btn">
+                    調査を開始する
+                </button>
+            </div>
+        </section>
+
+        <!-- ▼ 1. マップ画面（レーダー＋実マップ円） -->
+        <section id="screen-map" class="screen">
+            <div class="map-header">
+                <h1>怪異調査センター</h1>
+                <p id="map-status">周辺の怪異反応をスキャン中...</p>
+            </div>
+
+            <div id="map" class="map-container">
+                <!-- 丸いレーダーコンテナ -->
+                <div id="radar" class="radar">
+                    <!-- 実マップ（Leaflet）がこの中に描画される -->
+                    <div id="real-map" class="real-map-layer"></div>
+
+                    <!-- スキャンスイープ -->
+                    <div class="radar-sweep"></div>
+
+                    <!-- 自分（中心） -->
+                    <div class="radar-center-dot"></div>
+
+                    <!-- 怪異の反応 -->
+                    <div id="radar-kaiji" class="radar-dot radar-dot-kaiji hidden"></div>
+                </div>
+            </div>
+
+            <button id="start-investigation" class="main-btn hidden">
+                調査を開始する
+            </button>
+        </section>
+
+        <!-- ▼ 2. 会話パート画面（左右立ち絵＋テキスト） -->
+        <section id="screen-dialog" class="screen hidden">
+            <button id="menu-btn" class="menu-btn">調査メニュー</button>
+
+            <div class="bg-layer">
+                <img id="bg-image" class="bg-image" src="assets/bg/bg_seaside_night.jpg" alt="">
+            </div>
+
+            <div class="char-layer">
+                <img id="char-left" class="char-image char-left inactive" src="assets/char/player_neutral.png" alt="">
+                <img id="char-right" class="char-image char-right inactive" src="assets/char/partner_neutral.png"
+                    alt="">
+                <!-- ★ 追加：怪異カットイン用 -->
+                <img id="char-center" class="char-image char-center hidden" src="assets/kaiji/drowned_spirit.png" alt="">
+            </div>
+
+            <div class="textbox">
+                <div id="speaker-name" class="name-box"></div>
+                <div id="dialog-text" class="text-box"></div>
+
+                <!-- ★ 追加：選択肢表示用 -->
+                <div id="choice-container" class="choice-container hidden"></div>
+
+                <div class="textbox-hint">タップで進む</div>
+            </div>
+        </section>
+
+        <!-- ▼ 3. 調査メニュー（オーバーレイ） -->
+        <div id="menu-overlay" class="menu-overlay hidden">
+            <div class="menu-window">
+                <!--h2>調査メニュー</h2-->
+                <div class="menu-tabs">
+                    <button class="tab-btn active" data-tab="howto">調査の進め方</button>
+                    <button class="tab-btn" data-tab="evidence">証拠品</button>
+                    <button class="tab-btn" data-tab="memo">怪異の特徴メモ</button>
+                </div>
+                <div id="menu-content" class="menu-content"></div>
+                <div class="menu-footer">
+                    <button id="menu-close" class="sub-btn">閉じる</button>
+                </div>
+            </div>
         </div>
 
-        <button id="btn-start-game" class="main-btn">
-          調査を開始する
-        </button>
-      </div>
-    </section>
+        <!-- ▼ 4. 怪異特定画面 -->
+        <section id="screen-identify" class="screen hidden">
+            <div class="screen-inner">
+                <h2>怪異特定</h2>
+                <p class="identify-desc">
+                    手に入れた情報をもとに、怪異の正体をテキスト穴埋めで特定してください。
+                </p>
 
-    <!-- ▼ 1. マップ画面 -->
-    <section id="screen-map" class="screen hidden">
-      <div class="map-header">
-        <h1>怪異調査センター</h1>
-        <p id="map-status">周辺の怪異反応をスキャン中...</p>
-      </div>
+                <div id="fill-blanks" class="fill-blanks"></div>
 
-      <div id="radar-wrapper">
-        <div id="radar-circle">
-          <div id="radar-sweep"></div>
-          <div id="radar-kaiji" class="radar-kaiji hidden"></div>
-        </div>
-      </div>
+                <!-- ★ フィードバック表示用 -->
+                <div id="identify-feedback" class="identify-feedback"></div>
 
-      <div id="real-map"></div>
+                <button id="confirm-identity" class="main-btn">怪異を特定する</button>
+            </div>
+        </section>
 
-      <button id="start-investigation" class="main-btn hidden">
-        現場へ向かう
-      </button>
-    </section>
+        <!-- ▼ 5. 封印画面 -->
+        <section id="screen-seal" class="screen hidden">
+            <div class="screen-inner">
+                <h2>封印儀式</h2>
+                <p class="seal-desc">
+                    「封印」ボタンを長押しし、怪異を拘束してください。
+                </p>
+                <div class="seal-area">
+                    <button id="seal-btn" class="seal-btn">長押しで封印</button>
+                    <div class="seal-gauge-wrapper">
+                        <div id="seal-gauge" class="seal-gauge"></div>
+                    </div>
+                </div>
+                <!-- 封印完了エリア：ここに赤い演出＋「封印完了」テキストが出る -->
+                <div id="seal-effect" class="seal-effect"></div>
+            </div>
+        </section>
 
-    <!-- ▼ 2. 会話画面 -->
-    <section id="screen-dialog" class="screen hidden">
-      <div class="bg-layer">
-        <img id="bg-image" class="bg-image" src="" alt="" />
-        <img id="char-left" class="char-stand left inactive" src="" alt="" />
-        <img id="char-right" class="char-stand right inactive" src="" alt="" />
-      </div>
-
-      <div class="textbox">
-        <div class="textbox-header">
-          <div id="speaker-name" class="speaker-name"></div>
-          <button id="menu-btn" class="menu-btn">調査メニュー</button>
-        </div>
-        <div id="dialog-text" class="dialog-text"></div>
-        <div id="choice-container" class="choice-container hidden"></div>
-      </div>
-    </section>
-
-    <!-- ▼ 3. 調査フェーズ（背景をクリックして証拠を集める） -->
-    <section id="screen-investigation" class="screen hidden">
-      <div class="bg-layer">
-        <img id="investigation-bg" class="bg-image" src="" alt="" />
-        <div id="investigation-hotspots"></div>
-      </div>
-
-      <div class="investigation-ui">
-        <div class="investigation-text">
-          現場を調べて、怪異に関係しそうな「痕跡」をタップ／クリックしてください。
-        </div>
-        <div
-          id="investigation-found-list"
-          class="investigation-found-list"
-        >
-          （まだ証拠は見つかっていません）
-        </div>
-        <button id="btn-investigation-finish" class="main-btn">
-          調査を完了して、特定へ進む
-        </button>
-      </div>
-    </section>
-
-    <!-- ▼ 4. 怪異特定パート -->
-    <section id="screen-identify" class="screen hidden">
-      <h2 class="identify-title">怪異特定</h2>
-      <p class="identify-desc">
-        証言と現場で集めた証拠から導き出される怪異の正体を、以下の項目で特定せよ。
-      </p>
-
-      <div class="identify-header-row">
-        <button id="menu-btn-identify" class="menu-btn small">
-          調査メニュー
-        </button>
-      </div>
-
-      <div id="fill-blanks"></div>
-
-      <div id="identify-feedback" class="identify-feedback">
-        すべての項目について、当てはまりそうなワードを選んでください。
-      </div>
-
-      <button id="confirm-identity" class="main-btn">
-        この内容で怪異を特定する
-      </button>
-
-      <div id="identify-overlay" class="identify-overlay hidden">
-        <div class="identify-text">特定</div>
-      </div>
-      <div id="identify-fail-overlay" class="identify-overlay identify-fail hidden">
-        <div class="identify-text">特定失敗</div>
-      </div>
-    </section>
-
-    <!-- ▼ 5. 封印パート -->
-    <section id="screen-seal" class="screen hidden">
-      <h2 class="seal-title">封印儀式</h2>
-      <p class="seal-desc">
-        中央の印を長押しして、怪異をこの場所に縫いとめろ。
-      </p>
-
-      <button id="seal-btn" class="seal-btn">
-        封
-      </button>
-
-      <div class="seal-gauge-wrapper">
-        <div id="seal-gauge" class="seal-gauge"></div>
-      </div>
-
-      <div id="seal-effect" class="seal-effect">
-        <span class="seal-effect-text">封印完了</span>
-      </div>
-    </section>
-
-    <!-- ▼ 調査メニュー -->
-    <div id="menu-overlay" class="menu-overlay hidden">
-      <div class="menu-panel">
-        <div class="menu-header">
-          <div class="menu-tabs">
-            <button class="tab-btn active" data-tab="howto">調査の進め方</button>
-            <button class="tab-btn" data-tab="evidence">証拠品</button>
-            <button class="tab-btn" data-tab="memo">怪異の特徴メモ</button>
-          </div>
-          <button id="menu-close" class="menu-close">×</button>
-        </div>
-        <div id="menu-content" class="menu-content"></div>
-      </div>
-    </div>
-  </main>
-
-  <!-- キャラクターデータ -->
-  <script src="characters.js"></script>
-  <!-- ゲームロジック -->
-  <script src="game.js"></script>
+    </div><!-- /game-wrapper -->
+    <!-- キャラ定義 -->
+    <script src="js/characters.js" defer></script>
+    <!-- シナリオ定義 -->
+    <script src="js/scenarios.js" defer></script>
+    <!-- ゲーム本体（最後） -->
+    <script src="js/game.js" defer></script>
 </body>
+
 </html>
